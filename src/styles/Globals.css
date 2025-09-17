@@ -1,0 +1,46 @@
+:root {
+  /* 🎨 Colores principales */
+  --color-kako: rgba(150,119,157,1);
+  --color-padel: rgb(122,166,199);
+
+  /* 🔠 Tipografía */
+  --font-main: 'Arial', sans-serif;
+
+  /* 📏 Espaciados */
+  --spacing-section: 50px;
+}
+
+/* Asegurar que html y body ocupen todo el viewport */
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* bloquea scroll horizontal */
+  overflow-y: scroll; /* mantiene el scroll vertical funcional */
+  scrollbar-width: none; /* Firefox */
+  scroll-behavior: smooth;
+}
+
+/* Secciones ocupando todo el viewport */
+.index-section,
+.servicios-section,
+.reservas-section,
+.contacto-section {
+  /*width: 100vw; /* ancho total de la pantalla */
+  min-height: 100vh; /* altura total de la pantalla */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+
+
+@media (max-width: 768px) {
+  .centrado {
+    flex-direction: column;
+    text-align: center;
+  }
+}
