@@ -8,6 +8,7 @@
   align-items: center;
   background: url('../assets/f3.jpg') center/cover no-repeat;
   overflow: hidden;
+  text-align: center;
 }
 
 .reservas-section::before {
@@ -22,4 +23,118 @@
     rgba(0, 0, 0, 0.7)    /* abajo más claro */
   );
   z-index: 0; /* atrás del contenido */
+}
+
+.reservas-section h1 {
+  position: relative; /* para que esté sobre el overlay */
+  color: white;
+  font-size: 3em;
+  margin-top: 5%;
+  margin-bottom: 0%;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.6); /* mejora legibilidad sobre el fondo */
+  z-index: 1; /* sobre el overlay */
+}
+
+.reservas-section p {
+  background-color: rgba(255, 255, 255, 0.684);  
+  position: relative; /* para que esté sobre el overlay */
+  color: black;
+  font-size: 100%;
+  font-weight: bolder;
+  padding-left: 2% ;
+  padding-right: 2% ;
+  /*text-shadow: 2px 2px 6px var(--color-padel); /* mejora legibilidad sobre el fondo */
+  z-index: 1; /* sobre el overlay */
+  border-radius: 8px;
+}
+
+.reserva-container {
+  width: 90%;
+  height: 70%;
+  margin-bottom: 5%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 👈 7 columnas, un día por columna */
+  gap: 10px;
+  z-index: 1; /* adelante del overlay */
+}
+
+.reserva-dia {  
+  background-color: rgba(150, 119, 157, 0.684);  
+  border: 5px solid var(--color-padel);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.reserva-dia h3 {
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-bottom: 8px;
+
+}
+
+.turnos-lista {
+  width: 100%;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.turno {
+  width: 80%;
+  height: 12%;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: white;
+  font-size: 120%;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* Estados */
+.turno.disponible {
+  background-color: green;
+}
+
+.turno.reservado {
+  background-color: rgb(145, 145, 145);
+}
+
+.turno.inactivo {
+  background-color: rgba(172, 0, 0, 0.815);
+}
+/* Hover solo en los disponibles */
+.turno.disponible:hover {
+  transform: scale(1.2);
+  background-color: darkgreen;
+}
+
+.cancha-selector {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+  z-index: 1; /* adelante del overlay */
+}
+
+.cancha-selector button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 2px  green;
+  background: grey;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.cancha-selector button:hover {
+  color: green;
+  background: #f1f1f1;
+}
+
+.cancha-selector button.activo {
+  background: #4caf50;
+  color: white;
 }

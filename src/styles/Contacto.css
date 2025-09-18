@@ -23,3 +23,12 @@
   );
   z-index: 0; /* atrás del contenido */
 }
+
+.redes-container {
+  display: flex;
+  width: 40%;
+  height: auto;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  z-index: 5; /* atrás del contenido */
+}
