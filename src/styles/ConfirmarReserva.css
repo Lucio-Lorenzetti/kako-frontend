@@ -1,0 +1,90 @@
+.confirmar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+  background: #f5f5f5;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.confirmar-card {
+  background: var(--color-padel);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 100%;
+}
+
+.confirmar-card h1 {
+  margin-bottom: 1.5rem;
+  color: #128C7E;
+  text-align: center;
+}
+
+.turno-info {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--color-kako);
+  border-radius: 10px;
+}
+
+.turno-info p {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+.confirmar-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.confirmar-card label {
+  font-size: 0.95rem;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.confirmar-card input[type="number"],
+.confirmar-card input[type="tel"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+}
+
+.confirmar-card input:focus {
+  border: 1px solid #25D366;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.confirmar-card button {
+  padding: 12px;
+  background: #25D366;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.confirmar-card button:hover {
+  background: #20b85d;
+}
+
+.error {
+  margin-top: 1rem;
+  color: red;
+  font-size: 0.9rem;
+  text-align: center;
+}

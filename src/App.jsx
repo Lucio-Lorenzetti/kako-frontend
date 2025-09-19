@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import ReservarTurno from "./pages/ReservarTurno";
+import ConfirmarReserva from "./pages/ConfirmarReserva";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         {/* Confirmación de turno */}
-        <Route path="/reservar/:id" element={<ReservarTurno />} />
+        <Route path="/reservar/:id" element={<ConfirmarReserva />} />
       </Routes>
     </Router>
   );

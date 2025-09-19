@@ -34,7 +34,11 @@ const Reserva = () => {
 
   return (
     <section id="reserva" className="reservas-section">
-      <h1>Reservá tu Turno</h1>
+      <h1>
+        Reservá tu Turno
+        {" "}
+        {canchaSeleccionada === "interior" ? "en nuestra Cancha Interior" : "en nuestra Cancha de Blindex"}
+      </h1>
       <p>
         Para que la reserva sea confirmada se debe abonar el 50% del valor del turno.<br />
         Si tenés alguna duda, podés comunicarte con nosotros a través de nuestras redes sociales o por WhatsApp.  
