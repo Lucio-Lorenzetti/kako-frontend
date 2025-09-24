@@ -9,8 +9,9 @@ const ConfirmarReserva = () => {
   const turno = location.state?.turno;
 
   const [user, setUser] = useState(null);
-  const [jugadores, setJugadores] = useState("");
-  const [buscoPareja, setBuscoPareja] = useState(false);
+  const [jugadores, setJugadores] = useState("2");
+  const [buscoPareja, setBuscoPareja] = useState("No");
+  const [prestamoPaletas, setPrestamoPaletas] = useState("No");
   const [telefono, setTelefono] = useState("");
   const [error, setError] = useState(null);
 
@@ -20,17 +21,14 @@ const ConfirmarReserva = () => {
       api
         .get("/me", { headers: { Authorization: `Bearer ${token}` } })
         .then((res) => setUser(res.data))
-        .catch((err) => {
-          console.error("Error obteniendo usuario:", err);
-          setError("No se pudo cargar la información del usuario");
-        });
+        .catch(() => setError("No se pudo cargar la información del usuario"));
     }
   }, []);
 
   const handleConfirmar = async (e) => {
     e.preventDefault();
-    if (!jugadores || !telefono) {
-      setError("Por favor completa todos los campos obligatorios");
+    if (!telefono) {
+      setError("Por favor completá tu número de WhatsApp");
       return;
     }
 
@@ -43,15 +41,12 @@ const ConfirmarReserva = () => {
           jugadores,
           busco_pareja: buscoPareja,
           telefono,
+          presta_paletas: prestamoPaletas,
         },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-
-      navigate("/"); // después lo podemos mandar a una página de éxito
-    } catch (err) {
-      console.error("Error confirmando reserva:", err);
+      navigate("/"); // Acá después redirigimos a MercadoPago
+    } catch {
       setError("Error al confirmar la reserva, intentá nuevamente");
     }
   };
@@ -63,50 +58,85 @@ const ConfirmarReserva = () => {
   return (
     <section className="confirmar-container">
       <div className="confirmar-card">
-        <h1>Confirmar Reserva</h1>
+        <h1 className="titulo">
+          Hola {user?.name}, confirmá tu reserva
+        </h1>
 
-        <div className="turno-info">
-          <p><strong>Día:</strong> {new Date(turno.fecha).toLocaleDateString("es-AR")}</p>
-          <p><strong>Hora:</strong> {turno.hora.slice(0, 5)} hs</p>
-          <p><strong>Cancha:</strong> {turno.cancha}</p>
-          {user && <p><strong>Nombre:</strong> {user.name}</p>}
+        <div className="confirmar-grid">
+          {/* Columna izquierda - Formulario */}
+          <form className="form-col" onSubmit={handleConfirmar}>
+            <label>
+              Nº WhatsApp:
+              <input
+                type="tel"
+                placeholder="Ej: 291 555 1234"
+                value={telefono}
+                onChange={(e) => setTelefono(e.target.value)}
+                required
+              />
+            </label>
+
+            <label>
+              Cantidad de jugadores:
+              <select
+                value={jugadores}
+                onChange={(e) => setJugadores(e.target.value)}
+                required
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </label>
+
+            <label>
+              ¿Necesitás Paleta?
+              <select
+                value={prestamoPaletas}
+                onChange={(e) => setPrestamoPaletas(e.target.value)}
+                required
+              >
+                <option value="Si">Sí</option>
+                <option value="No">No</option>
+              </select>
+            </label>
+
+            <label>
+              ¿Buscás Pareja?
+              <select
+                value={buscoPareja}
+                onChange={(e) => setBuscoPareja(e.target.value)}
+                required
+              >
+                <option value="Si">Sí</option>
+                <option value="No">No</option>
+              </select>
+            </label>
+
+            <div className="boton-container">
+              <button type="submit" className="btn-reservar">
+                Confirmar Reserva
+              </button>
+            </div>
+          </form>
+
+          {/* Columna derecha - Info turno */}
+          <div className="picker-col">
+            <div className="picker-card">
+              <h3>Fecha</h3>
+              <p>{new Date(turno.fecha).toLocaleDateString("es-AR")}</p>
+            </div>
+            <div className="picker-card">
+              <h3>Hora</h3>
+              <p>{turno.hora.slice(0, 5)} hs</p>
+            </div>
+            <div className="picker-card">
+              <h3>Cancha</h3>
+              <p>{turno.cancha}</p>
+            </div>
+          </div>
         </div>
-
-        <form onSubmit={handleConfirmar}>
-          <label>
-            Cantidad de jugadores:
-            <input
-              type="number"
-              min="1"
-              max="4"
-              value={jugadores}
-              onChange={(e) => setJugadores(e.target.value)}
-              required
-            />
-          </label>
-
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              checked={buscoPareja}
-              onChange={(e) => setBuscoPareja(e.target.checked)}
-            />
-            Quiero que me busquen pareja
-          </label>
-
-          <label>
-            Número de teléfono:
-            <input
-              type="tel"
-              placeholder="Ej: 291 555 1234"
-              value={telefono}
-              onChange={(e) => setTelefono(e.target.value)}
-              required
-            />
-          </label>
-
-          <button type="submit">Confirmar Reserva</button>
-        </form>
 
         {error && <p className="error">{error}</p>}
       </div>

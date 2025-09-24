@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "../../styles/Globals.css";
+import Logo from "../../assets/logo-kako-blanco.png"; // Asegúrate de tener un logo en esta ruta
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -19,6 +21,9 @@ const Header = () => {
         zIndex: 1000,
       }}
     >
+      <div style={{ height: "100%", position: "absolute", left: "2%" }}>
+        <img src={Logo} alt="Logo cancha" className="logo-header" />
+      </div>
       {/* NAV - centrado */}
       <nav style={{ display: "flex", gap: "30px" }}>
         <a href="#index" style={{ color: "#fff", textDecoration: "none" }}>
@@ -46,7 +51,7 @@ const Header = () => {
             cursor: "pointer",
           }}
         >
-          Login
+          Administrador
         </button>
 
         {open && (

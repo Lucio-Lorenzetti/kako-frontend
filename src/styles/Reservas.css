@@ -95,7 +95,7 @@
 
 /* Estados */
 .turno.disponible {
-  background-color: green;
+  background-color: var(--color-padel);
 }
 
 .turno.reservado {
@@ -103,12 +103,12 @@
 }
 
 .turno.inactivo {
-  background-color: rgba(172, 0, 0, 0.815);
+  background-color: rgba(150, 119, 157, 0);  
 }
 /* Hover solo en los disponibles */
 .turno.disponible:hover {
   transform: scale(1.2);
-  background-color: darkgreen;
+  background-color: rgb(26, 155, 253);
 }
 
 .cancha-selector {
@@ -130,11 +130,11 @@
 }
 
 .cancha-selector button:hover {
-  color: green;
+  color: var(--color-padel);
   background: #f1f1f1;
 }
 
 .cancha-selector button.activo {
-  background: #4caf50;
+  background: var(--color-padel);
   color: white;
 }

@@ -36,7 +36,10 @@ html, body, #root {
   box-sizing: border-box;
 }
 
-
+.logo-header {
+  padding-left: 2%;
+  height: 85%; /* Ajusta según el tamaño deseado */
+}
 
 @media (max-width: 768px) {
   .centrado {

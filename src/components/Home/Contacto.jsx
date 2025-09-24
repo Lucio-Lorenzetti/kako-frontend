@@ -6,7 +6,7 @@ const Contacto = () => {
     <section id="contacto" className="contacto-section">
       <h1>Contacto</h1>
 
-      <div style={{ marginTop: "1%", zIndex: 0 }}>
+      <div className="map-container">
         <iframe
           title="Ubicación cancha"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3111.4544563289865!2d-62.26508992425417!3d-38.7532793883151!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95eda2d2d224d4cd%3A0x8bdb757675eecad8!2sTarapaca%201845%2C%20B8000%20Bah%C3%ADa%20Blanca%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1758306581284!5m2!1ses!2sar"
