@@ -138,3 +138,84 @@
   background: var(--color-padel);
   color: white;
 }
+
+/* -----------------------------
+ * MEDIA QUERIES (RESPONSIVE)
+ * -----------------------------*/
+@media (max-width: 1024px) {
+  .reserva-container {
+    width: 95%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Hacemos que la sección ocupe el espacio necesario */
+  .reservas-section {
+    min-height: 100vh; /* Se adapta a la altura del contenido */
+    height: auto;
+    padding: 20px 0;
+  }
+
+  /* Ajustamos los títulos y textos */
+  .reservas-section h1 {
+    font-size: 2em;
+    margin-top: 10%; /* Más espacio en la parte superior */
+  }
+
+  .reservas-section p {
+    font-size: 0.9rem;
+    padding: 10px;
+    margin: 10px auto;
+  }
+
+  /* El contenedor principal de reservas ahora es flexible y vertical */
+  .reserva-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 15px;
+    height: auto; /* La altura se ajusta al contenido */
+    overflow: visible; /* Elimina cualquier corte horizontal */
+    margin-left: 5%;
+    margin-right: 10%;
+    margin-bottom: 20px;
+  }
+  
+  /* Los días de reserva se expanden al 100% */
+  .reserva-dia {
+    width: 100%;
+    border-radius: 12px;
+  }
+  
+  /* La lista de turnos es flexible y se adapta al espacio */
+  .turnos-lista {
+    flex-direction: row; /* Los turnos se muestran en fila */
+    flex-wrap: wrap; /* Se envuelven a la siguiente línea */
+    justify-content: center;
+    gap: 8px; /* Espacio entre los turnos */
+    height: auto; /* La altura se adapta a las filas de turnos */
+  }
+
+  /* Ajustamos los botones de turno */
+  .turno {
+    width: 45%; /* Ancho flexible para que se vean dos por fila */
+    min-width: 100px; /* Ancho mínimo para que no se compriman */
+    height: auto;
+    padding: 10px 5px; /* Ajustamos el relleno para que el texto encaje */
+    font-size: 1rem;
+  }
+  
+  /* Ajustamos el selector de cancha */
+  .cancha-selector {
+    flex-direction: column;
+    width: 80%;
+    margin: 10px auto;
+    gap: 10px;
+  }
+  
+  .cancha-selector button {
+    width: 100%;
+  }
+}

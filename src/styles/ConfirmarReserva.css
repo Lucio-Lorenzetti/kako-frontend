@@ -105,13 +105,19 @@
 }
 
 .picker-card {
-  background: rgba(150, 119, 157, 0.684);
-  
+  background: rgba(150, 119, 157, 0.684);  
   border: 3px solid var(--color-padel);
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
-  color: white;
+  color: white;  
+  transition: all 0.5s ease;
+}
+
+.picker-card:hover {
+  scale: 1.05;
+  transition: all 0.5s ease;
+
 }
 
 .picker-card h3 {

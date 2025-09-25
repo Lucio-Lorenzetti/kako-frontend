@@ -1,0 +1,201 @@
+/* -----------------------------
+ * 🔹 HEADER CONTAINER
+ * -----------------------------*/
+.header-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background-color: rgba(122, 166, 199, 0.75);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.header-logo-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.logo-header {
+  height: 70%;
+  object-fit: contain;
+}
+
+/* -----------------------------
+ * 🔹 NAVEGACIÓN (ESCRITORIO)
+ * -----------------------------*/
+.header-nav {
+  display: flex;
+  gap: 30px;
+}
+
+.header-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.header-nav a:hover {
+  color: var(--color-kako);
+}
+
+/* -----------------------------
+ * 🔹 BOTÓN DE ADMINISTRADOR
+ * -----------------------------*/
+.header-admin-container.desktop {
+  padding-right: 2%;
+  height: 100%;
+  position: relative;
+  display: flex;
+}
+
+.header-admin-container.mobile {
+  display: none; /* Oculto en escritorio */
+}
+
+.admin-button {
+  background: transparent;
+  color: #fff;
+  padding-right: 10%;
+  padding-top: 1%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.admin-button:hover {
+  border: 0px;
+  color: var(--color-kako);
+}
+
+.admin-dropdown {
+  position: absolute;
+  top: 130%;
+  right: 0;
+  background-color: #fff;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  min-width: 150px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.admin-dropdown a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.admin-dropdown a:hover {
+  background-color: #f0f0f0;
+}
+
+/* -----------------------------
+ * 🔹 MENÚ HAMBURGUESA (MÓVIL)
+ * -----------------------------*/
+.hamburger-menu {
+  display: none; /* Oculto en escritorio */
+  cursor: pointer;
+  padding-right: 10%;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  margin: 5px 0;
+}
+
+/* -----------------------------
+ * 🔹 MEDIA QUERIES (RESPONSIVE)
+ * -----------------------------*/
+@media (max-width: 768px) {
+  .header-container {
+    justify-content: space-between; /* Spacing between logo and hamburger */
+    padding: 0 15px; /* Adjust padding for mobile */
+  }
+
+  /* Ocultar elementos de escritorio */
+  .header-nav,
+  .header-admin-container.desktop {
+    display: none;
+  }
+
+  /* Mostrar elementos de móvil */
+  .hamburger-menu {
+    display: block;
+  }
+  
+  /* Estilos para el menú móvil */
+  .header-nav.open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 60px);
+    background-color: rgba(122, 166, 199, 0.95);
+    padding: 20px;
+    transform: translateX(0);
+    transition: transform 0.4s ease-in-out;
+    align-items: center;
+    gap: 0; /* Remove gap in mobile menu */
+  }
+  
+  .header-nav.open a {
+    padding: 15px 0;
+    text-align: center;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .header-nav.open a:last-of-type {
+    border-bottom: none;
+  }
+
+  .header-admin-container.mobile {
+    display: block;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .header-admin-container.mobile .admin-dropdown {
+    position: static;
+    top: auto;
+    right: auto;
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+    background-color: transparent;
+    color: #fff;
+    margin-top: 10px;
+  }
+
+  .header-admin-container.mobile .admin-dropdown a {
+    color: #fff;
+    padding: 10px;
+  }
+}
+
+/* -----------------------------
+ * 🔹 KEYFRAME ANIMATIONS
+ * -----------------------------*/
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

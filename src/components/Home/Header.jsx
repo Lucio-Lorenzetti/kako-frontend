@@ -1,96 +1,54 @@
 import React, { useState } from "react";
-import "../../styles/Globals.css";
-import Logo from "../../assets/logo-kako-blanco.png"; // Asegúrate de tener un logo en esta ruta
+import { useNavigate } from "react-router-dom"; // <- import
+import Logo from "../../assets/logo-kako-blanco.png";
+import "../../styles/Header.css";
 
 const Header = () => {
-  const [open, setOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate(); // <- hook
 
   return (
-    <header
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "4%",
-        backgroundColor: "rgba(122, 166, 199, 0.75)",
-        color: "#fff",
-        display: "flex",
-        justifyContent: "center", // nav centrado
-        alignItems: "center",
-        zIndex: 1000,
-      }}
-    >
-      <div style={{ height: "100%", position: "absolute", left: "2%" }}>
+    <header className="header-container">
+      <div className="header-logo-container">
         <img src={Logo} alt="Logo cancha" className="logo-header" />
       </div>
-      {/* NAV - centrado */}
-      <nav style={{ display: "flex", gap: "30px" }}>
-        <a href="#index" style={{ color: "#fff", textDecoration: "none" }}>
-          Inicio
-        </a>
-        <a href="#servicios" style={{ color: "#fff", textDecoration: "none" }}>
-          Servicios
-        </a>
-        <a href="#reservas" style={{ color: "#fff", textDecoration: "none" }}>
-          Reservas
-        </a>
-        <a href="#contacto" style={{ color: "#fff", textDecoration: "none" }}>
-          Contacto
-        </a>
+
+      {/* Menú de hamburguesa para móvil */}
+      <div
+        className="hamburger-menu"
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
+        <div className="bar"></div>
+        <div className="bar"></div>
+        <div className="bar"></div>
+      </div>
+
+      {/* Navegación principal */}
+      <nav className={`header-nav ${isMenuOpen ? "open" : ""}`}>
+        <a href="#index">Inicio</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#reservas">Reservas</a>
+        <a href="#contacto">Contacto</a>
+
+        {/* Botón de Administrador dentro del menú para móvil */}
+        <div className="header-admin-container mobile">
+          <button
+            className="admin-button"
+            onClick={() => navigate("/admin/login")} // <- usar navigate
+          >
+            Administrador
+          </button>
+        </div>
       </nav>
 
-      {/* BOTÓN DE LOGIN - absoluto a la derecha */}
-      <div style={{ position: "absolute", right: "7%" }}>
+      {/* Botón de Administrador para escritorio */}
+      <div className="header-admin-container desktop">
         <button
-          onClick={() => setOpen(!open)}
-          style={{
-            background: "transparent",
-            color: "#fff",
-            padding: "2px 2px",
-            cursor: "pointer",
-          }}
+          className="admin-button"
+          onClick={() => navigate("/admin/login")} // <- usar navigate
         >
           Administrador
         </button>
-
-        {open && (
-          <div
-            style={{
-              position: "absolute",
-              top: "120%",
-              right: 0,
-              backgroundColor: "#fff",
-              color: "#333",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-              borderRadius: "8px",
-              overflow: "hidden",
-            }}
-          >
-            <a
-              href="#login"
-              style={{
-                display: "block",
-                padding: "10px 20px",
-                textDecoration: "none",
-                color: "#333",
-              }}
-            >
-              Ingresar
-            </a>
-            <a
-              href="#register"
-              style={{
-                display: "block",
-                padding: "10px 20px",
-                textDecoration: "none",
-                color: "#333",
-              }}
-            >
-              Registrarse
-            </a>
-          </div>
-        )}
       </div>
     </header>
   );

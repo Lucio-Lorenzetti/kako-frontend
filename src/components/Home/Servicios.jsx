@@ -30,7 +30,7 @@ const servicios = [
 const Servicios = () => {
   return (
     <section id="servicios" style={{ padding: "50px", textAlign: "center" }}>
-      <h1>Servicios</h1>
+      <h1>Nuestros Servicios</h1>
       <div className="servicios-container">
         {servicios.map((s, i) => (
           <div key={i} className="servicio-card">

@@ -41,9 +41,61 @@ html, body, #root {
   height: 85%; /* Ajusta según el tamaño deseado */
 }
 
+
+
+@media (max-width: 1024px) {
+  html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* bloquea scroll horizontal */
+  overflow-y: scroll; /* mantiene el scroll vertical funcional */
+  scrollbar-width: none; /* Firefox */
+  scroll-behavior: smooth;
+}
+
+/* Secciones ocupando todo el viewport */
+.index-section,
+.servicios-section,
+.reservas-section,
+.contacto-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+}
+
 @media (max-width: 768px) {
   .centrado {
     flex-direction: column;
     text-align: center;
   }
+}
+
+@media (max-width: 600px) {
+  html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* bloquea scroll horizontal */
+  overflow-y: scroll; /* mantiene el scroll vertical funcional */
+  scrollbar-width: none; /* Firefox */
+  scroll-behavior: smooth;
+}
+
+/* Secciones ocupando todo el viewport */
+.index-section,
+.servicios-section,
+.reservas-section,
+.contacto-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+}
 }

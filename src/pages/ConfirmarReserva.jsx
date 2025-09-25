@@ -1,17 +1,16 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../api/api";
 import "../styles/ConfirmarReserva.css";
 
 const ConfirmarReserva = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const turno = location.state?.turno;
 
   const [user, setUser] = useState(null);
   const [jugadores, setJugadores] = useState("2");
-  const [buscoPareja, setBuscoPareja] = useState("No");
-  const [prestamoPaletas, setPrestamoPaletas] = useState("No");
+  const [buscoPareja, setBuscoPareja] = useState("false");
+  const [prestamoPaletas, setPrestamoPaletas] = useState("false");
   const [telefono, setTelefono] = useState("");
   const [error, setError] = useState(null);
 
@@ -34,20 +33,28 @@ const ConfirmarReserva = () => {
 
     try {
       const token = localStorage.getItem("token");
-      await api.post(
-        "/reservas",
+
+      const response = await api.post(
+        "/pagos",
         {
           turno_id: turno.id,
           jugadores,
-          busco_pareja: buscoPareja,
+          busco_pareja: buscoPareja === "true",
           telefono,
-          presta_paletas: prestamoPaletas,
+          presta_paletas: prestamoPaletas === "true",
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      navigate("/"); // Acá después redirigimos a MercadoPago
+
+      const { init_point } = response.data;
+
+      if (init_point) {
+        window.location.href = init_point;
+      } else {
+        setError("No se pudo iniciar el pago. Intentá nuevamente.");
+      }
     } catch {
-      setError("Error al confirmar la reserva, intentá nuevamente");
+      setError("Error al iniciar el pago, intentá nuevamente");
     }
   };
 
@@ -58,9 +65,7 @@ const ConfirmarReserva = () => {
   return (
     <section className="confirmar-container">
       <div className="confirmar-card">
-        <h1 className="titulo">
-          Hola {user?.name}, confirmá tu reserva
-        </h1>
+        <h1 className="titulo">Hola {user?.name}, confirmá tu reserva</h1>
 
         <div className="confirmar-grid">
           {/* Columna izquierda - Formulario */}
@@ -97,8 +102,8 @@ const ConfirmarReserva = () => {
                 onChange={(e) => setPrestamoPaletas(e.target.value)}
                 required
               >
-                <option value="Si">Sí</option>
-                <option value="No">No</option>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
               </select>
             </label>
 
@@ -109,14 +114,14 @@ const ConfirmarReserva = () => {
                 onChange={(e) => setBuscoPareja(e.target.value)}
                 required
               >
-                <option value="Si">Sí</option>
-                <option value="No">No</option>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
               </select>
             </label>
 
             <div className="boton-container">
               <button type="submit" className="btn-reservar">
-                Confirmar Reserva
+                Confirmar y Pagar
               </button>
             </div>
           </form>

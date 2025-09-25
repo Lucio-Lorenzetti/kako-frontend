@@ -1,13 +1,17 @@
+/* -----------------------------
+ * 🔹 SECCIÓN PRINCIPAL
+ * -----------------------------*/
 #servicios {
   position: relative;
-  height: 100vh;
+  min-height: 100vh; /* Use min-height to ensure content fits */
   width: 100%;
   display: flex;
-  flex-direction: column; /* logo y texto uno debajo del otro */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background: url('../assets/f6.jpg') center/cover no-repeat;
   overflow: hidden;
+  padding: 50px 20px; /* Add padding for mobile to prevent content from touching the edges */
 }
 
 #servicios::before {
@@ -18,27 +22,32 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(
-    rgba(0, 0, 0, 0.148),   /* arriba más oscuro */
-    rgba(0, 0, 0, 0.7)    /* abajo más claro */
+    rgba(0, 0, 0, 0.148),
+    rgba(0, 0, 0, 0.7)
   );
-  z-index: 0; /* atrás del contenido */
+  z-index: 0;
 }
+
 #servicios h1 {
-  position: relative; /* para que esté sobre el overlay */
+  position: relative;
   color: white;
   font-size: 3em;
   margin-bottom: 20px;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.6); /* mejora legibilidad sobre el fondo */
-  z-index: 1; /* sobre el overlay */
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  z-index: 1;
 }
 
+/* -----------------------------
+ * 🔹 CONTENEDOR DE TARJETAS
+ * -----------------------------*/
 .servicios-container {
   display: flex;
   width: 100%;
-  height: auto;
-  justify-content: space-around;
+  max-width: 1200px; /* Limit max-width for better control on large screens */
+  justify-content: center;
   flex-wrap: wrap;
-  z-index: 1; /* atrás del contenido */
+  gap: 20px; /* Use gap for consistent spacing between cards */
+  z-index: 1;
 }
 
 .servicio-card {
@@ -47,47 +56,78 @@
   justify-content: flex-start;
   align-items: center;
   background-color: rgba(150, 119, 157, 0.684);
-  color: white; /* 👈 Todos los textos (h3, p, etc) heredan esto */
-  border-radius: 15px;
+  color: white;
+  border-radius: 15px; /* Use fixed units for better control */
   border: 5px solid var(--color-padel);
-  width: 20%;
+  width: 22%; /* Adjusted to 22% to account for gap */
   padding: 20px;
-  margin-top: 10px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
   transition: transform 0.3s, box-shadow 0.3s;
+  box-sizing: border-box; /* Crucial for including padding and border in the width */
 }
 
 .servicio-card h3 {
-  margin: 2%;
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
 }
 
 .servicio-card p {
-  font-size: 80%;
+  font-size: 1rem;
   font-weight: bold;
 }
 
 .servicio-card img {
-  width: 100%;          /* la imagen ocupa todo el ancho de la card */
-  height: auto;  
-  border-radius: 15px;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 15px;
 }
 
-
-/* Hover opcional */
+/* -----------------------------
+ * 🔹 HOVER EFFECT
+ * -----------------------------*/
 .servicio-card:hover {
-  transform: translateY(-5%);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transform: translateY(-15px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
+/* -----------------------------
+ * 🔹 MEDIA QUERIES (RESPONSIVE)
+ * -----------------------------*/
 @media (max-width: 1024px) {
   .servicio-card {
-    width: 45%; /* 2 por fila en tablets */
+    width: 45%; /* Two cards per row on tablets */
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  #servicios {
+    padding-top: 20px; /* Adjust top padding for better mobile view */
+  }
+
+  #servicios h1 {
+    font-size: 2em; /* Smaller font on mobile */
+  }
+
+  .servicios-container {
+    padding: 0 10px; /* Add horizontal padding to the container */
+    gap: 15px;
+  }
+
   .servicio-card {
-    width: 90%; /* 1 por fila en móviles */
+    width: 100%; /* One card per row on mobiles */
+    max-width: 350px; /* Optional: limit width on smaller screens for better readability */
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .servicio-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .servicio-card p {
+    font-size: 0.9rem;
   }
 }
