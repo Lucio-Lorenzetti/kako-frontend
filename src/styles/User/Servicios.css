@@ -1,17 +1,13 @@
-/* -----------------------------
- * 🔹 SECCIÓN PRINCIPAL
- * -----------------------------*/
 #servicios {
   position: relative;
-  min-height: 100vh; /* Use min-height to ensure content fits */
+  height: 100vh; /* Use min-height to ensure content fits */
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: url('../assets/f6.jpg') center/cover no-repeat;
+  background: url('../../assets/f6.jpg') center/cover no-repeat;
   overflow: hidden;
-  padding: 50px 20px; /* Add padding for mobile to prevent content from touching the edges */
 }
 
 #servicios::before {

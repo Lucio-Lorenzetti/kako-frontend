@@ -1,4 +1,4 @@
-import "../../styles/Index.css"; // Aquí vamos a poner estilos para el fondo e imagen del logo
+import "../../styles/User/Index.css"; // Aquí vamos a poner estilos para el fondo e imagen del logo
 import Logo from "../../assets/Logo-Color.png";
 
 

@@ -6,7 +6,7 @@
   flex-direction: column; /* logo y texto uno debajo del otro */
   justify-content: center;
   align-items: center;
-  background: url('../assets/f3.jpg') center/cover no-repeat;
+  background: url('../../assets/f3.jpg') center/cover no-repeat;
   overflow: hidden;
   text-align: center;
 }

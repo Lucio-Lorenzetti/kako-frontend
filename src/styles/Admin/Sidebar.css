@@ -1,0 +1,25 @@
+.sidebar {
+  width: 250px;
+  background: rgba(150, 119, 157, 0.9);
+  color: white;
+  padding: 20px;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  height: calc(100% - 60px);
+  box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+  z-index: 100;
+}
+
+.sidebar a {
+  display: block;
+  padding: 12px 15px;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.sidebar a:hover {
+  background: var(--color-padel);
+}

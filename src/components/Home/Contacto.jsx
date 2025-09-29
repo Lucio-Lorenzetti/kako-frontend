@@ -1,4 +1,4 @@
-import "../../styles/Contacto.css";
+import "../../styles/User/Contacto.css";
 import { FaWhatsapp, FaInstagram } from "react-icons/fa";
 
 const Contacto = () => {

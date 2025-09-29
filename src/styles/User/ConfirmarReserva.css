@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url('../assets/f2.jpg') center/cover no-repeat;
+  background: url('../../assets/f2.jpg') center/cover no-repeat;
   min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   position: relative;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import api from "../api/api";
-import "../styles/Auth.css";
+import api from "../../api/api";
+import "../../styles/Auth.css";
 
 const Login = () => {
   const location = useLocation();

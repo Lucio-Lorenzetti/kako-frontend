@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import api from "../api/api";
-import "../styles/ConfirmarReserva.css";
+import api from "../../api/api";
+import "../../styles/User/ConfirmarReserva.css";
 
 const ConfirmarReserva = () => {
   const location = useLocation();
@@ -88,9 +88,7 @@ const ConfirmarReserva = () => {
                 onChange={(e) => setJugadores(e.target.value)}
                 required
               >
-                <option value="1">1</option>
                 <option value="2">2</option>
-                <option value="3">3</option>
                 <option value="4">4</option>
               </select>
             </label>

@@ -1,10 +1,10 @@
-import Header from "../components/Home/Header";
-import Index from "../components/Home/Index";
-import Servicios from "../components/Home/Servicios";
-import Reservas from "../components/Home/Reservas";
-import Contacto from "../components/Home/Contacto";
-import CopyRight from "../components/Home/CopyRight";
-import "../styles/Globals.css"
+import Header from "../../components/Home/Header";
+import Index from "../../components/Home/Index";
+import Servicios from "../../components/Home/Servicios";
+import Reservas from "../../components/Home/Reservas";
+import Contacto from "../../components/Home/Contacto";
+import CopyRight from "../../components/Home/CopyRight";
+import "../../styles/Globals.css"
 
 const Home = () => {
   return (

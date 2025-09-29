@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // <- import
 import Logo from "../../assets/logo-kako-blanco.png";
-import "../../styles/Header.css";
+import "../../styles/User/Header.css";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

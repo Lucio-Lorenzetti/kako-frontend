@@ -1,4 +1,4 @@
-import "../../styles/Servicios.css"; 
+import "../../styles/User/Servicios.css"; 
 import Blindex from "../../assets/blindex.jpg";
 import Interior from "../../assets/cancha-interior.jpg";
 import Vestuario from "../../assets/vestuario.jpg";

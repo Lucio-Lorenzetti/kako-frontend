@@ -1,0 +1,130 @@
+.usuarios-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('../../assets/f6.jpg') center/cover no-repeat;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+}
+
+/* Overlay oscuro */
+.usuarios-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(0,0,0,0.7));
+  z-index: 0;
+}
+
+/* Tarjeta principal */
+.usuarios-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1000px;
+  background: rgba(255, 255, 255, 0.65);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Título y descripción */
+.usuarios-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: black;
+  z-index: 1; /* sobre el overlay */
+  text-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
+}
+
+.usuarios-description {
+  text-align: center;
+  font-size: 1rem;
+  color: #000000;
+  font-weight: bold;
+}
+
+/* Tabla */
+.usuarios-table-wrapper {
+  overflow-x: auto;
+}
+
+.usuarios-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.usuarios-table th,
+.usuarios-table td {
+  color: #000000;
+  font-weight: 500;
+  padding: 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  text-align: left;
+}
+
+.usuarios-table th {
+  background-color: rgba(150, 119, 157, 0.684);
+  color: rgb(255, 255, 255);
+  border-bottom: 2px solid var(--color-padel);
+}
+
+/* Selects de rol y estado */
+.rol-select,
+.estado-select {
+  font-weight: bold;
+  padding: 8px;
+  border-radius: 8px;
+  border: 2px solid var(--color-padel);
+  outline: none;
+  background: rgb(83,83,83);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.rol-select:focus,
+.estado-select:focus {
+  border-color: rgb(26, 155, 253);
+  box-shadow: 0px 0px 6px rgba(26, 155, 253, 0.5);
+}
+
+
+/* Botón de acción */
+.btn-usuario {
+  padding: 12px 24px;
+  background: var(--color-padel);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+}
+
+.btn-usuario:hover {
+  background: rgb(26, 155, 253);
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .usuarios-card {
+    padding: 1.5rem;
+  }
+
+  .usuarios-table th,
+  .usuarios-table td {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+}

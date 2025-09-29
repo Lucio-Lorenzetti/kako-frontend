@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import api from "../../api/api";
-import "../../styles/Reservas.css";
+import "../../styles/User/Reservas.css";
 
 const Reserva = () => {
   const [turnos, setTurnos] = useState([]);
