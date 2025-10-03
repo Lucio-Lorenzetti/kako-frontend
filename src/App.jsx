@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/User/Home";
 import Login from "./pages/User/Login";
 import ConfirmarReserva from "./pages/User/ConfirmarReserva";
+
 import LoginAdmin from "./pages/Admin/LoginAdmin";
 import AdminLayout from "./components/Admin/AdminLayout";
 import Dashboard from "./pages/Admin/Dashboard";
@@ -15,7 +16,6 @@ function App() {
       <Routes>
         {/* Página principal */}
         <Route path="/" element={<Home />} />
-
 
         {/* Login */}
         <Route path="/login" element={<Login />} />

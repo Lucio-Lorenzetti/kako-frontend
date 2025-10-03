@@ -1,0 +1,140 @@
+/* Tarjeta principal */
+.general-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 60%;
+  background: rgba(255, 255, 255, 0.65);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Título y descripción */
+.general-title {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-top: -2%;
+  margin-bottom: -2%;
+  color: black;
+  z-index: 1;
+  text-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
+}
+
+.general-description,
+.general-filters {
+  text-align: center;  
+  margin-top: 0%;
+  margin-bottom: 0%;
+  font-size: 1rem;
+  color: #000000;
+  font-weight: bold;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* Inputs y selects con mismo estilo */
+.general-filters input,
+.general-filters select,
+.estado-select {
+  padding: 5px;
+  border: 2px solid var(--color-padel);
+  border-radius: 8px;
+  outline: none;
+  font-size: 0.95rem;
+  background: rgb(83, 83, 83);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.general-filters input:focus,
+.general-filters select:focus,
+.estado-select:focus {
+  border-color: rgb(26, 155, 253);
+  box-shadow: 0px 0px 6px rgba(26, 155, 253, 0.5);
+}
+
+.general-pagination-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto; /* empuja a la derecha */
+}
+
+.general-pagination-inline button {
+  padding: 4px 8px;
+  background: rgb(83, 83, 83);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.general-pagination-inline button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.general-pagination-inline span {
+  font-size: 14px;
+  color: #333;
+}
+
+/*Tablas*/
+.general-table-wrapper {
+  overflow-y: auto;
+}
+
+.general-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.general-table th,
+.general-table td {
+  color: #000000;
+  font-weight: 500;
+  padding: 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.general-table th {
+  background-color: rgba(150, 119, 157, 0.684);
+  color: rgb(255, 255, 255);
+  border-bottom: 2px solid var(--color-padel);
+}
+
+.turnos-table tbody tr {
+  height: calc(100% / 8); /* 8 filas llenan todo el tbody */
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .general-card {
+    padding: 1.5rem;
+    height: auto; /* Se adapta al contenido en móviles */
+  }
+
+  .general-table th,
+  .general-table td {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+
+  .general-filters {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .general-table tbody tr {
+    height: auto; /* Ajuste automático en pantallas pequeñas */
+  }
+}

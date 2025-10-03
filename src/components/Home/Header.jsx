@@ -24,22 +24,24 @@ const Header = () => {
       </div>
 
       {/* Navegación principal */}
-      <nav className={`header-nav ${isMenuOpen ? "open" : ""}`}>
-        <a href="#index">Inicio</a>
-        <a href="#servicios">Servicios</a>
-        <a href="#reservas">Reservas</a>
-        <a href="#contacto">Contacto</a>
+      <div className="header-nav-container">
+        <nav className={`header-nav ${isMenuOpen ? "open" : ""}`}>
+          <a href="#index">Inicio</a>
+          <a href="#servicios">Servicios</a>
+          <a href="#reservas">Reservas</a>
+          <a href="#contacto">Contacto</a>
 
-        {/* Botón de Administrador dentro del menú para móvil */}
-        <div className="header-admin-container mobile">
-          <button
-            className="admin-button"
-            onClick={() => navigate("/admin/login")} // <- usar navigate
-          >
-            Administrador
-          </button>
-        </div>
-      </nav>
+          {/* Botón de Administrador dentro del menú para móvil */}
+          <div className="header-admin-container mobile">
+            <button
+              className="admin-button"
+              onClick={() => navigate("/admin/login")} // <- usar navigate
+            >
+              Administrador
+            </button>
+          </div>
+        </nav>
+      </div>
 
       {/* Botón de Administrador para escritorio */}
       <div className="header-admin-container desktop">
