@@ -8,8 +8,10 @@
   align-items: center;
   background: url('../assets/f2.jpg') center/cover no-repeat;
   overflow: hidden;
+  box-sizing: border-box;
   text-align: center;
 }
+
 
 .auth-container::before {
   content: "";
@@ -19,7 +21,7 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(to bottom,
-    rgba(255, 255, 255, 0.148),   /* arriba más oscuro */
+    rgba(255, 0, 0, 0.148),   /* arriba más oscuro */
     rgba(0, 0, 0, 0.7)    /* abajo más claro */
   );
   z-index: 0; /* atrás del contenido */
@@ -32,6 +34,9 @@
   border-radius: 15px;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   width: 350px;
+  text-align: center;
+  z-index: 1;
+  max-width: 90%;
   text-align: center;
   z-index: 1;
 }

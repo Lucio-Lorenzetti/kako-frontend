@@ -1,3 +1,5 @@
+![Logo](src/assets/Logo-Color.png)
+
 🖥️ Kako Padel - Frontend
 
 Frontend del sistema de reservas para la cancha de pádel Kako Padel.

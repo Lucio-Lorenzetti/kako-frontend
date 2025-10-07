@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/User/Home";
-import Login from "./pages/User/Login";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
 import ConfirmarReserva from "./pages/User/ConfirmarReserva";
 
-import LoginAdmin from "./pages/Admin/LoginAdmin";
+import LoginAdmin from "./pages/Auth/LoginAdmin";
 import AdminLayout from "./components/Admin/AdminLayout";
 import Dashboard from "./pages/Admin/Dashboard";
 import Reservas from "./pages/Admin/Reservas";
@@ -19,6 +20,7 @@ function App() {
 
         {/* Login */}
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
         {/* Confirmación de turno */}
         <Route path="/reservar/:id" element={<ConfirmarReserva />} />

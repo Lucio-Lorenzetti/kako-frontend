@@ -1,4 +1,3 @@
-// src/pages/Admin/Dashboard.jsx
 import React, { useEffect, useState } from "react";
 import api from "../../api/api";
 import "../../styles/Admin/Dashboard.css";
@@ -13,8 +12,12 @@ export default function Dashboard() {
   // Precios por cancha
   const [precioInterior, setPrecioInterior] = useState("");
   const [precioExterior, setPrecioExterior] = useState("");
-  const [saving, setSaving] = useState(false);
+  const [savingInterior, setSavingInterior] = useState(false);
+  const [savingExterior, setSavingExterior] = useState(false);
 
+  // ───────────────────────────────
+  // Cargar reservas y precios
+  // ───────────────────────────────
   useEffect(() => {
     // Traer reservas de hoy
     api
@@ -33,30 +36,43 @@ export default function Dashboard() {
     api
       .get("/admin/precios")
       .then((res) => {
-        setPrecioInterior(res.data.interior);
-        setPrecioExterior(res.data.exterior);
+        setPrecioInterior(res.data.interior ?? "");
+        setPrecioExterior(res.data.exterior ?? "");
       })
       .catch((err) => console.error(err.response?.data || err.message));
   }, []);
 
+  // ───────────────────────────────
+  // Expansión de filas
+  // ───────────────────────────────
   const toggleExpand = (id) => {
     setExpandedId(expandedId === id ? null : id);
   };
 
+  // ───────────────────────────────
+  // Guardar precios por cancha
+  // ───────────────────────────────
   const handleGuardarPrecio = (cancha, monto) => {
+    const setSaving =
+      cancha === "Interior" ? setSavingInterior : setSavingExterior;
     setSaving(true);
+
     api
-      .put(`/admin/precios/${cancha}`, { precio: monto })
+      .put(`/admin/turnos/precio/${cancha}`, { precio: monto })
       .then(() => {
-        alert("Precio actualizado");
+        alert(`✅ Precio de cancha ${cancha} actualizado correctamente`);
+        return api.get("/admin/precios");
       })
       .catch((err) => {
         console.error(err.response?.data || err.message);
-        alert("Error al actualizar precio");
+        alert("Error al actualizar el precio");
       })
       .finally(() => setSaving(false));
   };
 
+  // ───────────────────────────────
+  // Render principal
+  // ───────────────────────────────
   return (
     <div className="dashboard-container">
       {/* Reservas de hoy */}
@@ -94,7 +110,10 @@ export default function Dashboard() {
                         "—"}
                     </td>
                     <td>
-                      <button onClick={() => toggleExpand(reserva.id)}>
+                      <button
+                        onClick={() => toggleExpand(reserva.id)}
+                        className="btn-secondary"
+                      >
                         {expandedId === reserva.id
                           ? "Ocultar"
                           : "Ver detalles"}
@@ -146,24 +165,25 @@ export default function Dashboard() {
 
       {/* Precios */}
       <div className="general-card precio-card">
-        <h3 className="general-title">Precios por Turno</h3>
+        <h3 className="general-title">Precios por Turno (por Jugador)</h3>
         <div className="general-table-wrapper">
           <table className="general-table">
             <thead>
               <tr>
                 <th>Cancha</th>
-                <th>Precio</th>
+                <th>Precio ($)</th>
                 <th>Acción</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Interior</td>
-                <td>
+                <td className="general-filters">
                   <input
                     type="number"
                     value={precioInterior}
                     onChange={(e) => setPrecioInterior(e.target.value)}
+                    className="input-precio"
                   />
                 </td>
                 <td>
@@ -172,19 +192,20 @@ export default function Dashboard() {
                       handleGuardarPrecio("Interior", precioInterior)
                     }
                     className="btn-primary"
-                    disabled={saving}
+                    disabled={savingInterior}
                   >
-                    {saving ? "Guardando..." : "Guardar"}
+                    {savingInterior ? "Guardando..." : "Guardar"}
                   </button>
                 </td>
               </tr>
               <tr>
                 <td>Exterior</td>
-                <td>
+                <td className="general-filters">
                   <input
                     type="number"
                     value={precioExterior}
                     onChange={(e) => setPrecioExterior(e.target.value)}
+                    className="input-precio"
                   />
                 </td>
                 <td>
@@ -193,9 +214,9 @@ export default function Dashboard() {
                       handleGuardarPrecio("Exterior", precioExterior)
                     }
                     className="btn-primary"
-                    disabled={saving}
+                    disabled={savingExterior}
                   >
-                    {saving ? "Guardando..." : "Guardar"}
+                    {savingExterior ? "Guardando..." : "Guardar"}
                   </button>
                 </td>
               </tr>

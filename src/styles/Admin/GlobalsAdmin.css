@@ -43,6 +43,7 @@
 .general-filters select,
 .estado-select {
   padding: 5px;
+  text-align: center;
   border: 2px solid var(--color-padel);
   border-radius: 8px;
   outline: none;
@@ -101,7 +102,7 @@
 .general-table td {
   color: #000000;
   font-weight: 500;
-  padding: 10px;
+  padding: 6px 8px;
   border-bottom: 1px solid rgba(0,0,0,0.1);
   text-align: center;
 }

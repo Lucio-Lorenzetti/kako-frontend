@@ -47,7 +47,7 @@ export default function Header() {
 
       {/* Navegación principal */}
       <nav className={`header-nav ${isMenuOpen ? "open" : ""}`}>
-        <a href="/admin/dashboard">Dashboard</a>
+        <a href="/admin/dashboard">Inicio</a>
         <a href="/admin/reservas">Reservas</a>
         <a href="/admin/usuarios">Usuarios</a>
         <a href="/admin/turnos">Turnos</a>

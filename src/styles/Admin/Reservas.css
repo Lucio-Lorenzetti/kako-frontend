@@ -1,6 +1,7 @@
 .reservas-container {
   background: url('../../assets/f2.jpg') center/cover no-repeat;
-  padding: 40px 20px;
+  padding: 40px 20px;  
+  min-height: 80vh;
   position: relative;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   display: flex;

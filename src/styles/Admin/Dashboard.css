@@ -1,4 +1,5 @@
 .dashboard-container {
+  min-height: 88vh;
   display: flex;
   flex-direction: column; /* ahora los hijos se apilan verticalmente */
   justify-content: center;
