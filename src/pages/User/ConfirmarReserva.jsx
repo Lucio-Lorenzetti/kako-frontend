@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import MercadoPagoButton from "../../components/Home/MercadoPagoButton";
 import api from "../../api/api";
@@ -7,84 +7,111 @@ import "../../styles/User/ConfirmarReserva.css";
 
 const ConfirmarReserva = () => {
   const location = useLocation();
-  const navigate = useNavigate(); 
-  const turno = location.state?.turno;
+  const navigate = useNavigate();
+  const { id } = useParams();
 
+  const [turno, setTurno] = useState(location.state?.turno || null);
   const [user, setUser] = useState(null);
   const [jugadores, setJugadores] = useState("2");
   const [buscoPareja, setBuscoPareja] = useState("false");
   const [prestamoPaletas, setPrestamoPaletas] = useState("false");
   const [telefono, setTelefono] = useState("");
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false); // Para evitar doble click
+  const [loading, setLoading] = useState(false);
 
+  // 🔹 Cargar información del usuario logueado
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       api
         .get("/me", { headers: { Authorization: `Bearer ${token}` } })
-        .then((res) => setUser(res.data))
+        .then((res) => {
+          console.log("Usuario cargado:", res.data); // 👈 Verás esto en la consola del navegador
+          setUser(res.data);
+        })
         .catch(() => setError("No se pudo cargar la información del usuario"));
     }
   }, []);
 
-  // Función de validación para habilitar el botón de Mercado Pago
+  // 🔹 Prellenar el número de teléfono si el usuario lo tiene guardado
+  useEffect(() => {
+    if (user?.whatsapp && /^\d{10}$/.test(user.whatsapp)) {
+      setTelefono(user.whatsapp);
+    }
+  }, [user]);
+
+  // 🔹 Cargar datos del turno si no vinieron por props
+  useEffect(() => {
+    if (!turno && id) {
+      setLoading(true);
+      api
+        .get(`/turnos/${id}`)
+        .then((res) => setTurno(res.data))
+        .catch((err) => {
+          console.error("Error cargando turno:", err);
+          setError("No se pudo cargar el turno seleccionado.");
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [id, turno]);
+
   const isFormValid = () => {
-        // Validación básica de turno y monto
-        if (!turno || !turno.id || (turno.precio * Number(jugadores)) <= 0) {
-            return false;
-        }
+    if (!turno || !turno.id || turno.precio * Number(jugadores) <= 0) {
+      return false;
+    }
 
-        // Validación de WhatsApp (requerido por el backend)
-        const phoneRegex = /^\d{10}$/; 
-        if (!telefono || !phoneRegex.test(telefono)) {
-            return false;
-        }
+    // Solo validamos que el número tenga 10 dígitos
+    if (!telefono || telefono.length !== 10) {
+      return false;
+    }
 
-        return true;
-    };
-
-    // La función handleConfirmar ya no se usa para pagar, pero la dejamos por si la necesitas más tarde.
-  const handleConfirmar = async (e) => {
-    e.preventDefault();
-    // ... Lógica de reserva sin pago (si la necesitas) ...
+    return true;
   };
 
+  const handleConfirmar = (e) => {
+    e.preventDefault();
+  };
+
+  if (loading) return <p>Cargando turno...</p>;
 
   if (!turno) {
     return <p>No se encontró información del turno seleccionado.</p>;
   }
 
-   return (
-    <>
-      <Header />
+  return (
+  <>
+    <Header />
     <section className="confirmar-container">
       <div className="confirmar-card">
-        <h1 className="titulo">Hola {user?.name}, confirmá tu reserva</h1>
+        {/* 👇 render condicional para mostrar correctamente el nombre */}
+        {user ? (
+          <h1 className="titulo">
+            Hola {user.name}, confirmá tu reserva
+          </h1>
+        ) : (
+          <h1 className="titulo">Cargando tus datos...</h1>
+        )}
 
         <div className="confirmar-grid">
           {/* Columna izquierda - Formulario */}
-          <form className="form-col" onSubmit={(e) => e.preventDefault()}> {/* Ya no hace submit */}
+          <form className="form-col" onSubmit={handleConfirmar}>
             <label>
-            Nº WhatsApp:
-            <input
+              Nº WhatsApp:
+              <input
                 type="tel"
                 placeholder="Ej: 2915551234"
                 value={telefono}
                 onChange={(e) => {
-                    setTelefono(e.target.value);
-                    setError(null); // Limpiar error al escribir
+                  const value = e.target.value.replace(/\D/g, "").slice(0, 10);
+                  setTelefono(value);
                 }}
-                pattern="^\d{10}$"       
-                maxLength="10"           
+                maxLength="10"
                 required
-                title="Debe contener exactamente 10 dígitos (sin espacios, sin +54, solo el número)"
-            />
+              />
             </label>
 
-            {/* ... resto de los campos ... */}
             <label>
-               Cantidad de jugadores:
+              Cantidad de jugadores:
               <select
                 value={jugadores}
                 onChange={(e) => setJugadores(e.target.value)}
@@ -94,7 +121,8 @@ const ConfirmarReserva = () => {
                 <option value="4">4</option>
               </select>
               <p className="precio-total">
-                Precio total estimado: ${turno.precio * Number(jugadores)}
+                Precio total estimado: $
+                {(turno.precio * Number(jugadores)).toLocaleString("es-AR")}
               </p>
             </label>
 
@@ -123,35 +151,41 @@ const ConfirmarReserva = () => {
             </label>
 
             <div className="boton-container">
-                {!isFormValid() && (
-                    <button 
-                        type="button" 
-                        className="btn-reservar disabled" 
-                        disabled
-                        onClick={() => setError("Por favor completa tu número de WhatsApp correctamente (10 dígitos).")}
-                    >
-                        Completá los datos para pagar
-                    </button>
-                )}
+              {!isFormValid() && (
+                <button
+                  type="button"
+                  className="btn-reservar disabled"
+                  disabled
+                  onClick={() =>
+                    setError(
+                      "Por favor completá tu número de WhatsApp correctamente (10 dígitos)."
+                    )
+                  }
+                >
+                  Completá los datos para pagar
+                </button>
+              )}
 
-                {isFormValid() && (
-                    <MercadoPagoButton
-                        monto={turno.precio * Number(jugadores)} // Aseguramos que sea número
-                        descripcion={`Reserva cancha ${turno.cancha} - ${new Date(turno.fecha).toLocaleDateString("es-AR")} ${turno.hora.slice(0, 5)}hs`}
-                        // Pasamos todos los datos requeridos por la validación de Laravel
-                        reservaData={{
-                            turno_id: turno.id,
-                            cantidad_jugadores: jugadores,
-                            buscar_pareja: buscoPareja === "true",
-                            whatsapp: telefono,
-                            necesita_paleta: prestamoPaletas === "true",
-                        }}
-                        onPagoExitoso={() => navigate("/pago/success")} // Redirección al éxito
-                    />
-                )}
+              {isFormValid() && (
+                <MercadoPagoButton
+                  monto={turno.precio * Number(jugadores)}
+                  descripcion={`Reserva cancha ${turno.cancha} - ${new Date(
+                    turno.fecha
+                  ).toLocaleDateString("es-AR")} ${turno.hora.slice(0, 5)}hs`}
+                  reservaData={{
+                    turno_id: turno.id,
+                    cantidad_jugadores: jugadores,
+                    buscar_pareja: buscoPareja === "true",
+                    whatsapp: telefono,
+                    necesita_paleta: prestamoPaletas === "true",
+                  }}
+                  onPagoExitoso={() => navigate("/pago/success")}
+                />
+              )}
             </div>
           </form>
-          {/* ... Columna derecha - Info turno ... */}
+
+          {/* Columna derecha - Info turno */}
           <div className="picker-col">
             <div className="picker-card">
               <h3>Fecha</h3>
@@ -167,11 +201,13 @@ const ConfirmarReserva = () => {
             </div>
           </div>
         </div>
+
         {error && <p className="error">{error}</p>}
       </div>
     </section>
   </>
-  );
+);
+
 };
 
 export default ConfirmarReserva;

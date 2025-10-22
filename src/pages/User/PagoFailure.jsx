@@ -1,9 +1,20 @@
-// src/pages/User/PagoSuccess.jsx
-export default function PagoSuccess() {
+import { useNavigate } from "react-router-dom";
+import "../../styles/User/Pagos.css";
+import Logo from "../../assets/Logo-Color.png";
+
+export default function PagoFailure() {
+  const navigate = useNavigate();
+
   return (
-    <div className="text-center mt-20">
-      <h1 className="text-red-600 text-3xl font-bold">¡Pago fallido!</h1>
-      <p>Tu reserva no pudo ser confirmada. Por favor, intenta nuevamente.</p>
-    </div>
+    <section className="pagos-section">
+      <div className="overlay-pagos">
+        <img src={Logo} alt="Logo cancha" className="logo" />
+        <h1 className="error">¡Pago fallido!</h1>
+        <p>Tu reserva no pudo ser confirmada. Por favor, intenta nuevamente.</p>
+        <button className="btn-home" onClick={() => navigate("/")}>
+          Volver al inicio
+        </button>
+      </div>
+    </section>
   );
 }

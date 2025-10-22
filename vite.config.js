@@ -1,11 +1,14 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: '127.0.0.1', 
-    port: 5173, // Opcional, pero bueno para asegurar el puerto
-  }
+    host: '0.0.0.0', // permite acceso desde cualquier IP, necesario para ngrok
+    port: 5173,
+    allowedHosts: [
+      'applaudable-reinaldo-unvainly.ngrok-free.dev' // 👈 tu subdominio ngrok actual
+    ],
+  },
 })

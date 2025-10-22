@@ -15,8 +15,12 @@ export default function Dashboard() {
   const [savingInterior, setSavingInterior] = useState(false);
   const [savingExterior, setSavingExterior] = useState(false);
 
+  // Estado de habilitación de canchas
+  const [habilitadoInterior, setHabilitadoInterior] = useState(true);
+  const [habilitadoExterior, setHabilitadoExterior] = useState(true);
+
   // ───────────────────────────────
-  // Cargar reservas y precios
+  // Cargar datos iniciales
   // ───────────────────────────────
   useEffect(() => {
     // Traer reservas de hoy
@@ -40,7 +44,38 @@ export default function Dashboard() {
         setPrecioExterior(res.data.exterior ?? "");
       })
       .catch((err) => console.error(err.response?.data || err.message));
+
+    // Traer habilitación de canchas desde localStorage
+    const interiorLS = localStorage.getItem("interiorHabilitada");
+    const exteriorLS = localStorage.getItem("exteriorHabilitada");
+    setHabilitadoInterior(interiorLS === null ? true : interiorLS === "true");
+    setHabilitadoExterior(exteriorLS === null ? true : exteriorLS === "true");
   }, []);
+
+  // ───────────────────────────────
+  // Alternar habilitación de canchas
+  // ───────────────────────────────
+  const toggleCancha = (cancha) => {
+    if (cancha === "Interior") {
+      const nuevoEstado = !habilitadoInterior;
+      setHabilitadoInterior(nuevoEstado);
+      localStorage.setItem("interiorHabilitada", nuevoEstado);
+      alert(
+        `La cancha Interior ahora está ${
+          nuevoEstado ? "HABILITADA" : "DESHABILITADA"
+        }.`
+      );
+    } else if (cancha === "Exterior") {
+      const nuevoEstado = !habilitadoExterior;
+      setHabilitadoExterior(nuevoEstado);
+      localStorage.setItem("exteriorHabilitada", nuevoEstado);
+      alert(
+        `La cancha Exterior ahora está ${
+          nuevoEstado ? "HABILITADA" : "DESHABILITADA"
+        }.`
+      );
+    }
+  };
 
   // ───────────────────────────────
   // Expansión de filas
@@ -163,14 +198,15 @@ export default function Dashboard() {
         )}
       </div>
 
-      {/* Precios */}
+      {/* Precios y habilitación */}
       <div className="general-card precio-card">
-        <h3 className="general-title">Precios por Turno (por Jugador)</h3>
+        <h3 className="general-title">Turnos</h3>
         <div className="general-table-wrapper">
           <table className="general-table">
             <thead>
               <tr>
                 <th>Cancha</th>
+                <th>Habilitada/Deshabilitada</th>
                 <th>Precio ($)</th>
                 <th>Acción</th>
               </tr>
@@ -178,6 +214,16 @@ export default function Dashboard() {
             <tbody>
               <tr>
                 <td>Interior</td>
+                <td>
+                  <button
+                    onClick={() => toggleCancha("Interior")}
+                    className={`btn-secondary ${
+                      habilitadoInterior ? "habilitada" : "deshabilitada"
+                    }`}
+                  >
+                    {habilitadoInterior ? "Habilitada" : "Deshabilitada"}
+                  </button>
+                </td>
                 <td className="general-filters">
                   <input
                     type="number"
@@ -200,6 +246,16 @@ export default function Dashboard() {
               </tr>
               <tr>
                 <td>Exterior</td>
+                <td>
+                  <button
+                    onClick={() => toggleCancha("Exterior")}
+                    className={`btn-secondary ${
+                      habilitadoExterior ? "habilitada" : "deshabilitada"
+                    }`}
+                  >
+                    {habilitadoExterior ? "Habilitada" : "Deshabilitada"}
+                  </button>
+                </td>
                 <td className="general-filters">
                   <input
                     type="number"
