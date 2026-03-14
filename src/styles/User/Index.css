@@ -53,19 +53,16 @@
 /* -----------------------------
  * 🔹 MEDIA QUERIES
  * -----------------------------*/
-@media (max-width: 768px) {
-  /* Estilos para móviles y tablets pequeñas */
-  .logo {
-    width: 65%; /* Hacemos el logo más grande para móviles */
-  }
+@media (max-width:768px){
 
-  .bienvenida {
-    font-size: 2rem; /* Reducimos el tamaño de la fuente */
-  }
-  
-  h3 {
-    font-size: 1rem; /* Reducimos el tamaño de la fuente */
-  }
+.logo{
+  width:65%;
+}
+
+.bienvenida{
+  font-size:1.8rem;
+}
+
 }
 
 @media (max-width: 480px) {

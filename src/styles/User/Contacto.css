@@ -138,3 +138,28 @@
     font-size: 1rem;
   }
 }
+
+/* ===== MOBILE ===== */
+
+@media (max-width:768px){
+
+.contacto-section{
+  height:auto;
+  padding:40px 0;
+}
+
+.contacto-section h1{
+  font-size:2rem;
+}
+
+.map-container{
+  width:90%;
+  height:300px;
+}
+
+.redes-container{
+  flex-direction:column;
+  gap:15px;
+}
+
+}

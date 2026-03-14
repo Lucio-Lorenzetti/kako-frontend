@@ -150,71 +150,82 @@
   }
 }
 
+/* -----------------------------
+ * MEDIA QUERIES MÓVIL
+ * -----------------------------*/
 @media (max-width: 768px) {
-  /* Hacemos que la sección ocupe el espacio necesario */
+
+  /* Sección principal */
   .reservas-section {
-    min-height: 100vh; /* Se adapta a la altura del contenido */
     height: auto;
-    padding: 20px 0;
+    min-height: 100vh;
+    padding: 80px 0 40px 0; /* Padding lateral 0 para que el scroll llegue al borde */
+    overflow-x: hidden; /* Evita que toda la página baile de lado a lado */
   }
 
-  /* Ajustamos los títulos y textos */
   .reservas-section h1 {
-    font-size: 2em;
-    margin-top: 10%; /* Más espacio en la parte superior */
+    font-size: 2rem;
+    margin-top: 10%;
   }
 
   .reservas-section p {
     font-size: 0.9rem;
     padding: 10px;
     margin: 10px auto;
+    max-width: 90%;
   }
 
-  /* El contenedor principal de reservas ahora es flexible y vertical */
+  /* Contenedor de días con scroll horizontal */
   .reserva-container {
     display: flex;
-    flex-direction: column;
-    width: 90%;
+    flex-direction: row;
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch;
     gap: 15px;
-    height: auto; /* La altura se ajusta al contenido */
-    overflow: visible; /* Elimina cualquier corte horizontal */
-    margin-left: 5%;
-    margin-right: 10%;
-    margin-bottom: 20px;
-  }
-  
-  /* Los días de reserva se expanden al 100% */
-  .reserva-dia {
-    width: 100%;
-    border-radius: 12px;
-  }
-  
-  /* La lista de turnos es flexible y se adapta al espacio */
-  .turnos-lista {
-    flex-direction: row; /* Los turnos se muestran en fila */
-    flex-wrap: wrap; /* Se envuelven a la siguiente línea */
-    justify-content: center;
-    gap: 8px; /* Espacio entre los turnos */
-    height: auto; /* La altura se adapta a las filas de turnos */
+    width: 100%; /* Ocupa todo el ancho */
+    padding: 10px 20px 25px 20px; /* 👈 Padding a los dos lados para que el último día no se pegue al borde */
+    box-sizing: border-box; /* 👈 Vital para que el padding no rompa el ancho */
+    justify-content: flex-start;
   }
 
-  /* Ajustamos los botones de turno */
-  .turno {
-    width: 45%; /* Ancho flexible para que se vean dos por fila */
-    min-width: 100px; /* Ancho mínimo para que no se compriman */
-    height: auto;
-    padding: 10px 5px; /* Ajustamos el relleno para que el texto encaje */
-    font-size: 1rem;
+  /* Cada día de reserva */
+  .reserva-dia {
+    width: 100%;      
+    flex: 0 0 20px;  
+    border-radius: 12px;
+    background-color: rgba(150, 119, 157, 0.684);
+    padding: 0.5px;
+    padding-bottom: 10px;    
   }
-  
-  /* Ajustamos el selector de cancha */
+
+  /* Lista de turnos dentro de cada día */
+  .turnos-lista {
+    display: flex;
+    flex-direction: column;  /* 👈 turnos en columna */
+    gap: 8px;
+    align-items: center;
+    height: auto;
+  }
+
+  /* Cada turno */
+  .turno {
+    width: 40%;             /* ocupa casi todo el ancho del día */
+    min-width: 90px;
+    height: auto;
+    padding: 0.5px 0;
+    font-size: 0.5em;
+    flex-direction: column; 
+  }
+
+  /* Selector de cancha */
   .cancha-selector {
+    display: flex;
     flex-direction: column;
     width: 80%;
     margin: 10px auto;
     gap: 10px;
   }
-  
+
   .cancha-selector button {
     width: 100%;
   }

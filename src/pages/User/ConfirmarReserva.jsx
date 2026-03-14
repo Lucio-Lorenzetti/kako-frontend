@@ -83,7 +83,6 @@ const ConfirmarReserva = () => {
     <Header />
     <section className="confirmar-container">
       <div className="confirmar-card">
-        {/* 👇 render condicional para mostrar correctamente el nombre */}
         {user ? (
           <h1 className="titulo">
             Hola {user.name}, confirmá tu reserva
@@ -179,8 +178,24 @@ const ConfirmarReserva = () => {
                     whatsapp: telefono,
                     necesita_paleta: prestamoPaletas === "true",
                   }}
+                  onBeforePago={() => {
+                    localStorage.setItem(
+                      "reserva_pendiente",
+                      JSON.stringify({
+                        nombre_jugador: user?.name,
+                        whatsapp: telefono,
+                        cantidad_jugadores: jugadores,
+                        buscar_pareja: buscoPareja === "true",
+                        necesita_paleta: prestamoPaletas === "true",
+                        dia: new Date(turno.fecha).toLocaleDateString("es-AR"),
+                        hora: turno.hora.slice(0, 5),
+                        cancha: turno.cancha,
+                      })
+                    );
+                  }}
                   onPagoExitoso={() => navigate("/pago/success")}
                 />
+
               )}
             </div>
           </form>

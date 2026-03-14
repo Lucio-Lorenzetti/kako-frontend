@@ -3,22 +3,19 @@
   height: 100vh;
   width: 100%;
   display: flex;
-  flex-direction: column; /* logo y texto uno debajo del otro */
   justify-content: center;
   align-items: center;
   background: url('../../assets/f1.jpg') center/cover no-repeat;
   overflow: hidden;
+  text-align: center;
 }
 
 .pagos-section::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: linear-gradient(
-    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.148),
     rgba(0, 0, 0, 0.7)
   );
   z-index: 0;
@@ -27,86 +24,135 @@
 .overlay-pagos {
   position: relative;
   z-index: 1;
-  text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: 0 20px;
-  height: 100%;
 }
 
-.overlay-pagos .logo {
-  width: 40%; /* podés ajustar este valor según necesites */
+/* Logo estilo index */
+.logo {
+  width: 40%;
   height: auto;
   padding-left: 3%;
   transition: all 0.5s ease;
 }
 
-.overlay-pagos .logo:hover {
+.logo:hover {
   transform: scale(1.15);
   transition: all 0.2s ease;
 }
 
-.overlay-pagos h1 {
+/* Título igual a reservas */
+.pagoExitoso {
   font-size: 3rem;
   font-weight: bold;
   text-shadow: 2px 2px 6px rgba(0,0,0,0.6); /* mejora legibilidad sobre el fondo */
 }
 
-.overlay-pagos p {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
+.overlay-pagos {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: var(--color-padel); /* igual que Index */
 }
 
-.overlay-pagos .success {
-  color: #16a34a;
-}
-
-.overlay-pagos .error {
-  color: #dc2626;
-}
-
-.btn-home {
-  padding: 10px 25px;
-  font-size: 1rem;
+/* Subtítulo igual estilo Index */
+.subtitulo-pago {
+  margin-top: 10px;
   font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  background-color: var(--color-padel); /* amarillo */
-  color: #000;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.btn-home:hover {
-  background-color: var(--color-kako);
-  transform: scale(1.05);
+
+/* Caja estilo servicio-card */
+.pagos-box {
+  padding: 25px 30px;
+  width: auto;
+  height: auto;
+  max-width: 450px;
+  color: white;
+  transition: transform 0.3s ease;
 }
+
+.pagos-box:hover {
+  transform: translateY(-8px);
+}
+
+/*BOTONES UNIFICADOS*/
+
+.btn-general {
+  width: 220px;
+  padding: 10px 0;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  margin: 8px auto;
+  display: block;
+}
+
+/* BOTÓN WHATSAPP */
+.btn-wp {
+  background-color: var(--color-padel);
+  color: white;
+  text-decoration: none;
+  border: none;
+}
+
+.btn-wp:hover {
+  transform: scale(1.05);
+  background-color: rgb(26, 155, 253);
+  color: white;
+}
+
+/* BOTÓN VOLVER */
+.btn-volver {
+  background-color: var(--color-padel);
+  color: white;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-volver:hover:enabled {
+  transform: scale(1.05);
+  background-color: rgb(26, 155, 253);
+  color: white;
+}
+
+/* ESTADO DESHABILITADO */
+.btn-volver:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: gray;
+  color: gray;
+}
+
 
 /* -----------------------------
- * 🔹 MEDIA QUERIES
- * -----------------------------*/
+   RESPONSIVE
+------------------------------*/
 @media (max-width: 768px) {
-  .overlay-pagos .logo {
+  .logo {
     width: 65%;
   }
 
-  .overlay-pagos h1 {
-    font-size: 2rem;
+  .pagos-title {
+    font-size: 2em;
   }
 
-  .overlay-pagos p {
-    font-size: 1rem;
+  .pagos-box {
+    width: 95%;
+    padding: 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .overlay-pagos .logo {
+  .logo {
     width: 80%;
   }
 
-  .overlay-pagos h1 {
-    font-size: 1.5rem;
+  .pagos-title {
+    font-size: 1.5em;
   }
 }

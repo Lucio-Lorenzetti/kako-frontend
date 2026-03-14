@@ -51,17 +51,13 @@ const MercadoPagoButton = ({ monto, descripcion, reservaData = {}, onPagoExitoso
     }
   };
 
-  // Manejar callback al éxito (puede ser invocado por la integración de wallet si se necesita)
   useEffect(() => {
     if (preferenceId && typeof onPagoExitoso === "function") {
-      // No llamamos onPagoExitoso automáticamente: la wallet usará su propio flujo.
-      // Dejamos el hook por si en el futuro queremos notificar algo al crear la preference.
     }
   }, [preferenceId, onPagoExitoso]);
 
   return (
     <div>
-      {/* Botón de Mercado Pago: mostrar solo si NO existe preferenceId */}
       <div
         className="mp-loading-container"
         aria-hidden={!!preferenceId}
@@ -79,7 +75,6 @@ const MercadoPagoButton = ({ monto, descripcion, reservaData = {}, onPagoExitoso
 
       {error && <p className="error">{error}</p>}
 
-      {/* Wallet: mostrar solo cuando existe preferenceId */}
       <div id="wallet_container" aria-hidden={!preferenceId} style={{ display: preferenceId ? "block" : "none" }}>
         {preferenceId && <Wallet initialization={{ preferenceId }} />}
       </div>

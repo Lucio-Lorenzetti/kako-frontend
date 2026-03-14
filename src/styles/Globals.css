@@ -1,16 +1,10 @@
 :root {
-  /* 🎨 Colores principales */
   --color-kako: rgba(150,119,157,1);
   --color-padel: rgb(122,166,199);
-
-  /* 🔠 Tipografía */
-  --font-main: 'Arial', sans-serif;
-
-  /* 📏 Espaciados */
-  --spacing-section: 50px;
+  --font-main: Arial, sans-serif;
 }
 
-/* Asegurar que html y body ocupen todo el viewport */
+/* Reset base */
 html, body, #root {
   width: 100%;
   height: 100%;
@@ -22,80 +16,46 @@ html, body, #root {
   scroll-behavior: smooth;
 }
 
-/* Secciones ocupando todo el viewport */
+/* Secciones base */
+
 .index-section,
 .servicios-section,
 .reservas-section,
-.contacto-section {
-  /*width: 100vw; /* ancho total de la pantalla */
-  min-height: 100vh; /* altura total de la pantalla */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  box-sizing: border-box;
+.contacto-section{
+  width:100%;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  box-sizing:border-box;
 }
 
-.logo-header {
-  padding-left: 2%;
-  height: 85%; /* Ajusta según el tamaño deseado */
+/* Logo header */
+
+.logo-header{
+  padding-left:2%;
+  height:85%;
 }
 
+/* MOBILE */
 
+@media (max-width:768px){
 
-@media (max-width: 1024px) {
-  html, body, #root {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* bloquea scroll horizontal */
-  overflow-y: scroll; /* mantiene el scroll vertical funcional */
-  scrollbar-width: none; /* Firefox */
-  scroll-behavior: smooth;
-}
-
-/* Secciones ocupando todo el viewport */
 .index-section,
 .servicios-section,
 .reservas-section,
-.contacto-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  box-sizing: border-box;
-}
+.contacto-section{
+  padding:30px 15px;
+  min-height:auto;
 }
 
-@media (max-width: 768px) {
-  .centrado {
-    flex-direction: column;
-    text-align: center;
-  }
+h1{
+  font-size:2rem;
 }
 
-@media (max-width: 600px) {
-  html, body, #root {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* bloquea scroll horizontal */
-  overflow-y: scroll; /* mantiene el scroll vertical funcional */
-  scrollbar-width: none; /* Firefox */
-  scroll-behavior: smooth;
+h3{
+  font-size:1rem;
 }
 
-/* Secciones ocupando todo el viewport */
-.index-section,
-.servicios-section,
-.reservas-section,
-.contacto-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  box-sizing: border-box;
-}
 }

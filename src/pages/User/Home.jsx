@@ -4,30 +4,28 @@ import Servicios from "../../components/Home/Servicios";
 import Reservas from "../../components/Home/Reservas";
 import Contacto from "../../components/Home/Contacto";
 import CopyRight from "../../components/Home/CopyRight";
-import "../../styles/Globals.css"
+import "../../styles/Globals.css";
 
 const Home = () => {
   return (
-    <>
+    <div className="home-main-container">
       <Header />
-      <div style={{ width: "100%"}}>
-        <section id="index" className="index-section">
+      <main>
+        <section id="index">
           <Index />
         </section>
-        <section id="servicios" className="servicios-section">
+        <section id="servicios">
           <Servicios />
         </section>
-        <section id="reservas" className="reservas-section">
+        <section id="reservas">
           <Reservas />
         </section>
-        <section id="contacto" className="contacto-section">
+        <section id="contacto">
           <Contacto />
         </section>
-        <section id="copyright" className="copyright-section">
-          <CopyRight />
-        </section>
-      </div>
-    </>
+      </main>
+      <CopyRight />
+    </div>
   );
 };
 

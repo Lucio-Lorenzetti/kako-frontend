@@ -127,3 +127,29 @@
     font-size: 0.9rem;
   }
 }
+
+/* ===== MOBILE ===== */
+
+@media (max-width:768px){
+
+#servicios{
+  height:auto;
+  padding:40px 0;
+}
+
+#servicios h1{
+  font-size:2rem;
+}
+
+.servicios-container{
+  flex-direction:column;
+  align-items:center;
+  width:90%;
+}
+
+.servicio-card{
+  width:100%;
+  max-width:350px;
+}
+
+}
