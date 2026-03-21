@@ -49,3 +49,4 @@ React Router – navegación (planificado para futuras rutas).
 
 Desarrollado por Lorenzetti Lucio
 E-mail: lucioadriell@gmail.com
+Vercel: https://kakopadel.vercel.app/
