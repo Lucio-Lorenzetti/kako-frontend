@@ -164,6 +164,88 @@
   text-align: center;
   font-weight: bold;
 }
+
+/* --- AJUSTES PARA MÓVIL (Añadir al final) --- */
+
+@media (max-width: 768px) {
+  /* 1. Bajamos todo el contenido para que el Header no lo tape */
+  .confirmar-container {
+    height: auto !important; /* Permitimos que la página crezca */
+    min-height: 100vh;
+    padding: 100px 15px 40px 15px; /* 100px arriba es la clave */
+    align-items: flex-start; /* Alineamos al inicio para que el scroll sea natural */
+  }
+
+  /* 2. Ajustamos la tarjeta blanca */
+  .confirmar-card {
+    padding: 1.2rem;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.85); /* Un poco más sólida para leer mejor */
+  }
+
+  /* 3. Reducimos el tamaño del título del saludo */
+  .titulo {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  /* 4. Hacemos que la cuadrícula de Fecha/Hora/Cancha sea más compacta */
+  .confirmar-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Reorganizamos el orden: Primero los inputs, luego la info (opcional) */
+  .form-col {
+    order: 1; 
+  }
+
+  .picker-col {
+    order: 2;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Fecha y Hora lado a lado */
+    gap: 10px;
+  }
+
+  /* 5. Achicamos las tarjetas de info para que no ocupen toda la pantalla */
+  .picker-card {
+    padding: 10px 5px;
+    margin: 0;
+  }
+
+  .picker-card:hover {
+    scale: 1; /* Quitamos el hover en móvil para evitar saltos visuales */
+  }
+
+  .picker-card h3 {
+    font-size: 0.7rem;
+    margin-bottom: 2px;
+  }
+
+  .picker-card p {
+    font-size: 1rem;
+  }
+
+  /* La tarjeta de CANCHA la hacemos ocupar todo el ancho abajo */
+  .picker-card:last-child {
+    grid-column: span 2;
+  }
+
+  /* 6. El botón de reservar */
+  .boton-container {
+    margin-top: 1.5rem;
+    order: 3;
+  }
+
+  .btn-reservar {
+    width: 100%; /* Botón grande y fácil de tocar */
+    padding: 15px;
+  }
+}
+
 @media (max-width: 900px) {
   .confirmar-grid {
     grid-template-columns: 1fr;
