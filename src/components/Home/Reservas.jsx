@@ -84,7 +84,7 @@ const Reserva = () => {
         Si tenés alguna duda, podés comunicarte con nosotros a través de nuestras redes sociales o por WhatsApp.
       </p>
 
-      <div className="cancha-selector">
+      {/*<div className="cancha-selector">
         <button
           className={canchaSeleccionada === "interior" ? "activo" : ""}
           onClick={() => setCanchaSeleccionada("interior")}
@@ -92,14 +92,14 @@ const Reserva = () => {
         >
           Interior
         </button>
-        {/*<button
+        <button
           className={canchaSeleccionada === "exterior" ? "activo" : ""}
           onClick={() => setCanchaSeleccionada("exterior")}
           disabled={!canchasHabilitadas.exterior}
         >
           Exterior
-        </button>*/}
-      </div>
+        </button>
+      </div>*/}
 
       <div className="reserva-container">
         {Object.entries(turnosPorDia).map(([fecha, lista]) => (

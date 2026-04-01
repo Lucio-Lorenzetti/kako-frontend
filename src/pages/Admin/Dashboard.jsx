@@ -14,6 +14,8 @@ export default function Dashboard() {
   const [precioExterior, setPrecioExterior] = useState("");
   const [savingInterior, setSavingInterior] = useState(false);
   const [savingExterior, setSavingExterior] = useState(false);
+  const [senaInterior, setSenaInterior] = useState("");
+  const [senaExterior, setSenaExterior] = useState("");
 
   // Estado de habilitación de canchas
   const [habilitadoInterior, setHabilitadoInterior] = useState(true);
@@ -42,6 +44,8 @@ export default function Dashboard() {
       .then((res) => {
         setPrecioInterior(res.data.interior ?? "");
         setPrecioExterior(res.data.exterior ?? "");
+        setSenaInterior(res.data.sena_interior ?? "");
+        setSenaExterior(res.data.sena_exterior ?? "");
       })
       .catch((err) => console.error(err.response?.data || err.message));
 
@@ -85,17 +89,33 @@ export default function Dashboard() {
   };
 
   // ───────────────────────────────
-  // Guardar precios por cancha
+  // Guardar precios por cancha con validación
   // ───────────────────────────────
-  const handleGuardarPrecio = (cancha, monto) => {
-    const setSaving =
-      cancha === "Interior" ? setSavingInterior : setSavingExterior;
-    setSaving(true);
+  const handleGuardarPrecio = (cancha) => {
+    const setSaving = cancha === "Interior" ? setSavingInterior : setSavingExterior;
+    const montoPrecio = parseFloat(cancha === "Interior" ? precioInterior : precioExterior);
+    const montoSena = parseFloat(cancha === "Interior" ? senaInterior : senaExterior);
 
+    // VALIDACIÓN: La seña no puede ser mayor al precio
+    if (montoSena > montoPrecio) {
+      alert(`Error: La seña de la cancha ${cancha} no puede ser mayor al precio total ($${montoPrecio}).`);
+      return; // Corta la ejecución aquí
+    }
+
+    // VALIDACIÓN OPCIONAL: Evitar números negativos
+    if (montoPrecio < 0 || montoSena < 0) {
+      alert("Los montos no pueden ser valores negativos.");
+      return;
+    }
+
+    setSaving(true);
     api
-      .put(`/admin/turnos/precio/${cancha}`, { precio: monto })
+      .put(`/admin/turnos/precio/${cancha}`, { 
+        precio: montoPrecio, 
+        sena: montoSena 
+      })
       .then(() => {
-        alert(`✅ Precio de cancha ${cancha} actualizado correctamente`);
+        alert(`Configuración de cancha ${cancha} actualizada correctamente`);
         return api.get("/admin/precios");
       })
       .catch((err) => {
@@ -208,6 +228,7 @@ export default function Dashboard() {
                 <th>Cancha</th>
                 <th>Habilitada/Deshabilitada</th>
                 <th>Precio ($)</th>
+                <th>Seña ($)</th>
                 <th>Acción</th>
               </tr>
             </thead>
@@ -217,26 +238,30 @@ export default function Dashboard() {
                 <td>
                   <button
                     onClick={() => toggleCancha("Interior")}
-                    className={`btn-secondary ${
-                      habilitadoInterior ? "habilitada" : "deshabilitada"
-                    }`}
+                    className={`btn-secondary ${habilitadoInterior ? "habilitada" : "deshabilitada"}`}
                   >
                     {habilitadoInterior ? "Habilitada" : "Deshabilitada"}
                   </button>
                 </td>
-                <td className="general-filters">
+                <td>
                   <input
                     type="number"
                     value={precioInterior}
                     onChange={(e) => setPrecioInterior(e.target.value)}
-                    className="input-precio"
+                    className="input-tablas" 
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    value={senaInterior}
+                    onChange={(e) => setSenaInterior(e.target.value)}
+                    className={`input-tablas ${parseFloat(senaInterior) > parseFloat(precioInterior) ? "input-error" : ""}`}
                   />
                 </td>
                 <td>
                   <button
-                    onClick={() =>
-                      handleGuardarPrecio("Interior", precioInterior)
-                    }
+                    onClick={() => handleGuardarPrecio("Interior")}
                     className="btn-primary"
                     disabled={savingInterior}
                   >
@@ -249,26 +274,30 @@ export default function Dashboard() {
                 <td>
                   <button
                     onClick={() => toggleCancha("Exterior")}
-                    className={`btn-secondary ${
-                      habilitadoExterior ? "habilitada" : "deshabilitada"
-                    }`}
+                    className={`btn-secondary ${habilitadoExterior ? "habilitada" : "deshabilitada"}`}
                   >
                     {habilitadoExterior ? "Habilitada" : "Deshabilitada"}
                   </button>
                 </td>
-                <td className="general-filters">
+                <td>
                   <input
                     type="number"
                     value={precioExterior}
                     onChange={(e) => setPrecioExterior(e.target.value)}
-                    className="input-precio"
+                    className="input-tablas" 
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    value={senaExterior}
+                    onChange={(e) => setSenaExterior(e.target.value)}
+                    className={`input-tablas ${parseFloat(senaExterior) > parseFloat(precioExterior) ? "input-error" : ""}`}
                   />
                 </td>
                 <td>
                   <button
-                    onClick={() =>
-                      handleGuardarPrecio("Exterior", precioExterior)
-                    }
+                    onClick={() => handleGuardarPrecio("Exterior")}
                     className="btn-primary"
                     disabled={savingExterior}
                   >

@@ -20,3 +20,31 @@
 }
 
 
+/* Nueva clase para inputs dentro de tablas */
+.input-tablas {
+  width: 80px; /* Ancho fijo para que las columnas sean simétricas */
+  padding: 5px;
+  text-align: center;
+  border: 2px solid #96779d; /* Color que ya usas */
+  border-radius: 8px;
+  background: rgb(83, 83, 83);
+  color: white;
+  outline: none;
+}
+
+.input-tablas:focus {
+  border-color: rgb(26, 155, 253);
+}
+
+/* Asegurar que las celdas no colapsen */
+.general-table td {
+  vertical-align: middle;
+  white-space: nowrap; /* Evita que el contenido salte de línea */
+}
+
+.input-error {
+  border: 2px solid #000000 !important;
+  font-weight: bold;
+  background-color: #ff0000 !important;
+  color: black !important;
+}
