@@ -26,6 +26,13 @@ const Reserva = () => {
         console.log("Datos cargados desde el backend:", res.data);
       })
       .catch((err) => console.error("Error cargando datos:", err));
+
+      api.get("/precios-publicos")
+      .then((res) => {
+        console.log("Precios cargados:", res.data);
+        setPrecios(res.data);
+      })
+      .catch((err) => console.error("Error precios:", err));
   };
 
   useEffect(() => {
@@ -83,12 +90,16 @@ const Reserva = () => {
   const limiteUTCString = new Date(limiteDate.getFullYear(), limiteDate.getMonth(), limiteDate.getDate()).toISOString().slice(0, 10);
 
   const turnosFiltrados = turnos.filter((t) => {
-    const fechaTurnoString = t.fecha.split("T")[0];
-    return (
-      t.cancha.toLowerCase() === canchaSeleccionada &&
-      fechaTurnoString >= hoyUTCString &&
-      fechaTurnoString <= limiteUTCString
-    );
+      const fechaTurno = t.fecha.split(" ")[0]; 
+      // Usamos toLowerCase() en AMBOS lados para estar seguros
+      const canchaDB = t.cancha ? t.cancha.toLowerCase() : "";
+      const canchaBuscada = canchaSeleccionada.toLowerCase();
+
+      return (
+        canchaDB === canchaBuscada &&
+        fechaTurno >= hoyStr &&
+        fechaTurno <= limiteStr
+      );
   });
 
   const turnosPorDia = turnosFiltrados.reduce((acc, turno) => {

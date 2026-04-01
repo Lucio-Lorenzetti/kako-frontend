@@ -22,15 +22,15 @@
 
 /* Nueva clase para inputs dentro de tablas */
 .input-tablas {
-  width: 40%; /* Ancho fijo para que las columnas sean simétricas */
-  padding: 5px;
+  width: 100px; /* Es mejor un ancho fijo en px para control total del símbolo */
+  padding: 6px 6px 6px 25px; /* El padding-left de 25px deja lugar para el $ */
   text-align: center;
-  border: 2px solid #96779d; /* Color que ya usas */
+  border: 2px solid #96779d;
   border-radius: 8px;
   background: rgb(83, 83, 83);
   color: white;
-  outline: none;  
-  padding-left: 25px !important; /* Mueve el texto del número a la derecha para que no pise el $ */
+  outline: none;
+  font-size: 1rem;
 }
 
 .input-tablas:focus {
@@ -39,8 +39,9 @@
 
 /* Asegurar que las celdas no colapsen */
 .general-table td {
+  text-align: center; /* Esto centra el wrapper (y por ende el input) en la celda */
   vertical-align: middle;
-  white-space: nowrap; /* Evita que el contenido salte de línea */
+  padding: 12px 8px;
 }
 
 .input-error {
@@ -53,17 +54,17 @@
 /* Contenedor relativo para posicionar el símbolo */
 .input-symbol-wrapper {
   position: relative;
-  display: flex;
+  display: inline-flex; /* Cambiado: se ajusta al tamaño del contenido */
   align-items: center;
-  justify-content: center; /* ESTO CENTRA EL INPUT EN EL CASILLERO */
-  width: 100%; /* Asegura que ocupe todo el ancho de la celda */
+  vertical-align: middle;
 }
 
 /* Estilo del símbolo $ */
 .input-symbol {
   position: absolute;
-  left: 10px; /* Espacio desde el borde izquierdo */
-  color: #ffffff; /* Color del símbolo */
-  pointer-events: none; /* Para que al hacer click en el $ se seleccione el input */
+  left: 8px; /* Ajuste fino dentro del borde del input */
+  color: #ffffff;
+  z-index: 10;
+  pointer-events: none;
 }
 
