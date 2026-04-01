@@ -27,7 +27,7 @@ export default function PagoSuccess() {
     return <p>Cargando información de la reserva...</p>;
   }
 
-  const phone = "5492914973266";
+  const phone = "5492915024986";
 
   const message = `
 Se realizó una nueva reserva...

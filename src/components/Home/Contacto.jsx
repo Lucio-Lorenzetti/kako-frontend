@@ -20,7 +20,7 @@ const Contacto = () => {
 
       <div className="redes-container">
         <a
-          href="https://wa.me/5492914973266?text=Hola%20buenos%20días,%20quisiera%20información%20sobre%20las%20reservas%20de%20cancha."
+         href="https://wa.me/5492915024986?text=Hola%20buenos%20días,%20quisiera%20información%20sobre%20las%20reservas%20de%20cancha."
           target="_blank"
           rel="noopener noreferrer"
           className="btn-wp"
