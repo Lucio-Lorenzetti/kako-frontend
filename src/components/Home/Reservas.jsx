@@ -6,20 +6,32 @@ import "../../styles/User/Reservas.css";
 const Reserva = () => {
   const [turnos, setTurnos] = useState([]);
   const [canchaSeleccionada, setCanchaSeleccionada] = useState("interior");
+  
+  // Estado para los precios (Iniciamos en null para validar la carga)
+  const [precios, setPrecios] = useState(null);
+
   const [canchasHabilitadas, setCanchasHabilitadas] = useState({
     interior: true,
     exterior: true,
   });
   const navigate = useNavigate();
 
+  // --- MODIFICADO: Ahora carga turnos y precios en una sola petición ---
   const cargarTurnos = () => {
     api.get("/turnos")
-      .then((res) => setTurnos(res.data))
-      .catch((err) => console.error("Error cargando turnos:", err));
+      .then((res) => {
+        // Asumiendo que el backend ahora devuelve: { turnos: [...], precios: {...} }
+        setTurnos(res.data.turnos || []);
+        setPrecios(res.data.precios || null);
+        console.log("Datos cargados desde el backend:", res.data);
+      })
+      .catch((err) => console.error("Error cargando datos:", err));
   };
 
   useEffect(() => {
     cargarTurnos();
+
+    // --- ELIMINADO: Ya no llamamos a /admin/precios por separado ---
 
     const interiorLS = localStorage.getItem("interiorHabilitada");
     const exteriorLS = localStorage.getItem("exteriorHabilitada");
@@ -44,6 +56,25 @@ const Reserva = () => {
 
     return () => clearTimeout(timeout);
   }, []);
+
+  // Función para obtener la info de la cancha actual sin que rompa si precios es null
+  const infoCancha = () => {
+    if (!precios) return { precio: "...", sena: "..." };
+
+    if (canchaSeleccionada === "interior") {
+      return { 
+        precio: precios.interior ?? 0, 
+        sena: precios.sena_interior ?? 0 
+      };
+    } else {
+      return { 
+        precio: precios.exterior ?? 0, 
+        sena: precios.sena_exterior ?? 0 
+      };
+    }
+  };
+
+  const info = infoCancha();
 
   const fechaHoy = new Date();
   const hoyUTCString = new Date(fechaHoy.getFullYear(), fechaHoy.getMonth(), fechaHoy.getDate()).toISOString().slice(0, 10);
@@ -79,8 +110,10 @@ const Reserva = () => {
         Reservá tu Turno{" "}
         {canchaSeleccionada === "interior" ? "en nuestra Cancha Interior" : "en nuestra Cancha de Blindex"}
       </h1>
+      
       <p>
-        Para que la reserva sea confirmada se debe abonar el 50% del valor del turno.<br />
+        El valor del turno es de <strong>${info.precio}</strong>.<br />
+        Para que la reserva sea confirmada se debe abonar una seña de <strong>${info.sena}</strong>.<br />
         Si tenés alguna duda, podés comunicarte con nosotros a través de nuestras redes sociales o por WhatsApp.
       </p>
 

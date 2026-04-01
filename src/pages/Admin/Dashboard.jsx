@@ -226,85 +226,101 @@ export default function Dashboard() {
             <thead>
               <tr>
                 <th>Cancha</th>
-                <th>Habilitada/Deshabilitada</th>
-                <th>Precio ($)</th>
-                <th>Seña ($)</th>
+                <th>Estado</th>
+                <th>Precio Total</th>
+                <th>Seña Requerida</th>
                 <th>Acción</th>
               </tr>
             </thead>
             <tbody>
+              {/* FILA INTERIOR */}
               <tr>
-                <td>Interior</td>
-                <td>
-                  <button
-                    onClick={() => toggleCancha("Interior")}
-                    className={`btn-secondary ${habilitadoInterior ? "habilitada" : "deshabilitada"}`}
-                  >
-                    {habilitadoInterior ? "Habilitada" : "Deshabilitada"}
-                  </button>
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    value={precioInterior}
-                    onChange={(e) => setPrecioInterior(e.target.value)}
-                    className="input-tablas" 
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    value={senaInterior}
-                    onChange={(e) => setSenaInterior(e.target.value)}
-                    className={`input-tablas ${parseFloat(senaInterior) > parseFloat(precioInterior) ? "input-error" : ""}`}
-                  />
-                </td>
-                <td>
-                  <button
-                    onClick={() => handleGuardarPrecio("Interior")}
-                    className="btn-primary"
-                    disabled={savingInterior}
-                  >
-                    {savingInterior ? "Guardando..." : "Guardar"}
-                  </button>
-                </td>
-              </tr>
+            <td>Interior</td>
+            <td>
+              <button
+                onClick={() => toggleCancha("Interior")}
+                className={`btn-secondary ${habilitadoInterior ? "habilitada" : "deshabilitada"}`}
+              >
+                {habilitadoInterior ? "Habilitada" : "Deshabilitada"}
+              </button>
+            </td>
+            <td>
+              {/* Contenedor para el símbolo pegado al input */}
+              <div className="input-symbol-wrapper">
+                <span className="input-symbol">$</span>
+                <input
+                  type="number"
+                  value={precioInterior}
+                  onChange={(e) => setPrecioInterior(e.target.value)}
+                  className="input-tablas" 
+                />
+              </div>
+            </td>
+            <td>
+              <div className="input-symbol-wrapper">
+                <span className="input-symbol">$</span>
+                <input
+                  type="number"
+                  value={senaInterior}
+                  onChange={(e) => setSenaInterior(e.target.value)}
+                  className={`input-tablas ${parseFloat(senaInterior) > parseFloat(precioInterior) ? "input-error" : ""}`}
+                />
+              </div>
+            </td>
+            <td>
+              <button
+                onClick={() => handleGuardarPrecio("Interior")}
+                className="btn-primary"
+                disabled={savingInterior}
+              >
+                {savingInterior ? "Guardando..." : "Guardar"}
+              </button>
+            </td>
+          </tr>
+              {/* FILA EXTERIOR (Repite la misma lógica de "input-with-symbol") */}
               <tr>
-                <td>Exterior</td>
-                <td>
-                  <button
-                    onClick={() => toggleCancha("Exterior")}
-                    className={`btn-secondary ${habilitadoExterior ? "habilitada" : "deshabilitada"}`}
-                  >
-                    {habilitadoExterior ? "Habilitada" : "Deshabilitada"}
-                  </button>
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    value={precioExterior}
-                    onChange={(e) => setPrecioExterior(e.target.value)}
-                    className="input-tablas" 
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    value={senaExterior}
-                    onChange={(e) => setSenaExterior(e.target.value)}
-                    className={`input-tablas ${parseFloat(senaExterior) > parseFloat(precioExterior) ? "input-error" : ""}`}
-                  />
-                </td>
-                <td>
-                  <button
-                    onClick={() => handleGuardarPrecio("Exterior")}
-                    className="btn-primary"
-                    disabled={savingExterior}
-                  >
-                    {savingExterior ? "Guardando..." : "Guardar"}
-                  </button>
-                </td>
-              </tr>
+            <td>Exterior</td>
+            <td>
+              <button
+                onClick={() => toggleCancha("Exterior")}
+                className={`btn-secondary ${habilitadoExterior ? "habilitada" : "deshabilitada"}`}
+              >
+                {habilitadoExterior ? "Habilitada" : "Deshabilitada"}
+              </button>
+            </td>
+            <td>
+              {/* Contenedor para el símbolo pegado al input */}
+              <div className="input-symbol-wrapper">
+                <span className="input-symbol">$</span>
+                <input
+                  type="number"
+                  value={precioExterior}
+                  onChange={(e) => setPrecioExterior(e.target.value)}
+                  className="input-tablas" 
+                />
+              </div>
+            </td>
+            <td>
+              <div className="input-symbol-wrapper">
+                <span className="input-symbol">$</span>
+                <input
+                  type="number"
+                  value={senaExterior}
+                  onChange={(e) => setSenaExterior(e.target.value)}
+                  className={`input-tablas ${parseFloat(senaExterior) > parseFloat(precioExterior) ? "input-error" : ""}`}
+                />
+              </div>
+            </td>
+            <td>
+              <button
+                onClick={() => handleGuardarPrecio("Exterior")}
+                className="btn-primary"
+                disabled={savingExterior}
+              >
+                {savingExterior ? "Guardando..." : "Guardar"}
+              </button>
+            </td>
+          </tr>
             </tbody>
           </table>
         </div>
