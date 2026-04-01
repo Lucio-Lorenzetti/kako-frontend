@@ -92,13 +92,13 @@ const Reserva = () => {
         >
           Interior
         </button>
-        <button
+        {/*<button
           className={canchaSeleccionada === "exterior" ? "activo" : ""}
           onClick={() => setCanchaSeleccionada("exterior")}
           disabled={!canchasHabilitadas.exterior}
         >
           Exterior
-        </button>
+        </button>*/}
       </div>
 
       <div className="reserva-container">

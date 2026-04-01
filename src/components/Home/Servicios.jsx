@@ -5,11 +5,11 @@ import Vestuario from "../../assets/vestuario.jpg";
 import Cantina from "../../assets/cantina.jpg";
 
 const servicios = [
-  { 
+  /*{ 
     nombre: "Cancha Blindex Exterior", 
     descripcion: "Disfrutá partidos únicos en nuestra cancha de blindex al aire libre, con iluminación LED para jugar de día o de noche.", 
     imagen: Blindex 
-  },
+  },*/
   { 
     nombre: "Cancha Interior", 
     descripcion: "Jugá sin preocuparte por el clima en nuestra cancha techada, ideal para entrenar y competir en cualquier momento del año.", 
