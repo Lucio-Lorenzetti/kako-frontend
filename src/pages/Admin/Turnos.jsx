@@ -8,15 +8,16 @@ export default function Turnos() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchDate, setSearchDate] = useState("");
-  const [selectedCancha, setSelectedCancha] = useState(""); // filtro cancha
+  const [selectedCancha, setSelectedCancha] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(8);
+  const [perPage, setPerPage] = useState(16); // Sugerencia: 16 suele verse mejor en tablas
 
   useEffect(() => {
     api
       .get("/admin/turnos")
       .then((res) => {
-        setTurnos(res.data);
+        // Validación: Asegurarse de que res.data sea un array
+        setTurnos(Array.isArray(res.data) ? res.data : []);
         setLoading(false);
       })
       .catch((err) => {
@@ -36,41 +37,48 @@ export default function Turnos() {
       })
       .catch((err) => {
         console.error(err.response?.data || err.message);
-        alert("Error al actualizar el estado del turno");
+        alert("Error al actualizar el estado");
       });
   };
 
-  // Obtener listado de canchas únicas
-  const canchas = [...new Set(turnos.map((t) => t.cancha))];
+  // Obtener canchas únicas (agregué filter(Boolean) por si hay nulos)
+  const canchas = [...new Set(turnos.map((t) => t.cancha).filter(Boolean))];
 
-  // Filtrado por fecha y cancha
-  const filteredTurnos = turnos.filter((t) => {
-    const matchDate = searchDate
-      ? new Date(t.fecha).toISOString().slice(0, 10) === searchDate
-      : true;
-    const matchCancha = selectedCancha ? t.cancha === selectedCancha : true;
-    return matchDate && matchCancha;
-  });
+  // Filtrado y Ordenado
+  const filteredTurnos = turnos
+    .filter((t) => {
+      if (!t.fecha) return false; // Evita errores si no hay fecha
+      
+      // Forma segura de obtener YYYY-MM-DD sin que la zona horaria moleste
+      const fechaTurno = t.fecha.split("T")[0];
+      
+      const matchDate = searchDate ? fechaTurno === searchDate : true;
+      const matchCancha = selectedCancha ? t.cancha === selectedCancha : true;
+      return matchDate && matchCancha;
+    })
+    .sort((a, b) => {
+      // Ordenar por fecha y luego por hora
+      if (a.fecha !== b.fecha) return a.fecha.localeCompare(b.fecha);
+      return (a.hora || "").localeCompare(b.hora || "");
+    });
 
   // Paginación
   const totalItems = filteredTurnos.length;
-  const totalPages = perPage === "all" ? 1 : Math.ceil(totalItems / perPage);
+  const itemsPerPage = perPage === "all" ? totalItems : perPage;
+  const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
   const displayedTurnos =
     perPage === "all"
       ? filteredTurnos
-      : filteredTurnos.slice((currentPage - 1) * perPage, currentPage * perPage);
+      : filteredTurnos.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <div className="turnos-container">
       <div className="general-card">
         <h2 className="general-title">Gestión de Turnos</h2>
-        <p className="general-description">
-          Aquí puedes ver todos los turnos y cambiar su estado.
-        </p>
-        {/* Filtros */}
+        
         <div className="general-filters">
           <label>
-            Filtrar por fecha:{" "}
+            Fecha:{" "}
             <input
               type="date"
               value={searchDate}
@@ -82,7 +90,7 @@ export default function Turnos() {
           </label>
 
           <label>
-            Filtrar por cancha:{" "}
+            Cancha:{" "}
             <select
               value={selectedCancha}
               onChange={(e) => {
@@ -92,15 +100,13 @@ export default function Turnos() {
             >
               <option value="">Todas</option>
               {canchas.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
+                <option key={c} value={c}>{c}</option>
               ))}
             </select>
           </label>
 
           <label>
-            Turnos por página:{" "}
+            Por página:{" "}
             <select
               value={perPage}
               onChange={(e) => {
@@ -108,37 +114,22 @@ export default function Turnos() {
                 setCurrentPage(1);
               }}
             >
-              {[8, 16, 24, 32, 40, 48, 56, "all"].map((n) => (
-                <option key={n} value={n}>
-                  {n === "all" ? "Todos" : n}
-                </option>
+              {[8, 16, 32, 48, "all"].map((n) => (
+                <option key={n} value={n}>{n === "all" ? "Todos" : n}</option>
               ))}
             </select>
           </label>
 
-          {/* Paginación arriba, al lado de los filtros */}
           {perPage !== "all" && totalPages > 1 && (
             <div className="general-pagination-inline">
-              <button
-                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                disabled={currentPage === 1}
-              >
-                ◀
-              </button>
-              <span>
-                {currentPage} de {totalPages}
-              </span>
-              <button
-                onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                disabled={currentPage === totalPages}
-              >
-                ▶
-              </button>
+              <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>◀</button>
+              <span>{currentPage} / {totalPages}</span>
+              <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>▶</button>
             </div>
           )}
         </div>
 
-        {loading && <p className="turnos-loading">Cargando turnos...</p>}
+        {loading && <p>Cargando...</p>}
         {error && <p className="turnos-error">{error}</p>}
 
         {!loading && !error && (
@@ -156,28 +147,17 @@ export default function Turnos() {
                 {displayedTurnos.map((turno) => (
                   <tr key={turno.id}>
                     <td>
-                      {turno.fecha
-                        ? (() => {
-                            const [year, month, day] = turno.fecha.split("T")[0].split("-");
-                            return `${day}-${month}`;
-                          })()
-                        : ""}
+                      {turno.fecha ? turno.fecha.split("T")[0].split("-").reverse().slice(0, 2).join("/") : "-"}
                     </td>
                     <td>
-                      {turno.hora
-                        ? turno.hora.split(":").slice(0, 2).join(":")
-                        : ""}
+                      {turno.hora ? turno.hora.slice(0, 5) : "-"}
                     </td>
                     <td>{turno.cancha}</td>
                     <td>
                       <select
                         value={turno.estado}
-                        onChange={(e) =>
-                          handleEstadoChange(turno.id, e.target.value)
-                        }
-                        className={`estado-select ${
-                          turno.estado?.toLowerCase() || ""
-                        }`}
+                        onChange={(e) => handleEstadoChange(turno.id, e.target.value)}
+                        className={`estado-select ${turno.estado?.toLowerCase() || ""}`}
                       >
                         <option value="disponible">Disponible</option>
                         <option value="reservado">Reservado</option>

@@ -6,166 +6,100 @@ import "../../styles/User/Reservas.css";
 const Reserva = () => {
   const [turnos, setTurnos] = useState([]);
   const [canchaSeleccionada, setCanchaSeleccionada] = useState("interior");
-  
-  // Estado para los precios (Iniciamos en null para validar la carga)
   const [precios, setPrecios] = useState(null);
-
-  const [canchasHabilitadas, setCanchasHabilitadas] = useState({
-    interior: true,
-    exterior: true,
-  });
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // --- MODIFICADO: Ahora carga turnos y precios en una sola petición ---
-  const cargarTurnos = () => {
+  const cargarDatos = () => {
+    setLoading(true);
     api.get("/turnos")
       .then((res) => {
-        // Asumiendo que el backend ahora devuelve: { turnos: [...], precios: {...} }
-        setTurnos(res.data.turnos || []);
-        setPrecios(res.data.precios || null);
-        console.log("Datos cargados desde el backend:", res.data);
+        // Manejamos si el backend devuelve {turnos:[], precios:{}} o solo el array
+        const dataTurnos = res.data.turnos || (Array.isArray(res.data) ? res.data : []);
+        const dataPrecios = res.data.precios || null;
+        
+        setTurnos(dataTurnos);
+        if (dataPrecios) setPrecios(dataPrecios);
+        setLoading(false);
       })
-      .catch((err) => console.error("Error cargando datos:", err));
+      .catch((err) => {
+        console.error("Error cargando datos:", err);
+        setLoading(false);
+      });
 
-      api.get("/precios-publicos")
-      .then((res) => {
-        console.log("Precios cargados:", res.data);
-        setPrecios(res.data);
-      })
+    // Petición de respaldo para precios si el endpoint /turnos no los trae
+    api.get("/precios-publicos")
+      .then((res) => setPrecios(res.data))
       .catch((err) => console.error("Error precios:", err));
   };
 
   useEffect(() => {
-    cargarTurnos();
-
-    // --- ELIMINADO: Ya no llamamos a /admin/precios por separado ---
-
-    const interiorLS = localStorage.getItem("interiorHabilitada");
-    const exteriorLS = localStorage.getItem("exteriorHabilitada");
-
-    setCanchasHabilitadas({
-      interior: interiorLS === null ? true : interiorLS === "true",
-      exterior: exteriorLS === null ? true : exteriorLS === "true",
-    });
-
-    const ahora = new Date();
-    const proximaMedianoche = new Date(
-      ahora.getFullYear(),
-      ahora.getMonth(),
-      ahora.getDate() + 1,
-      0, 0, 0, 0
-    );
-    const tiempoHastaMedianoche = proximaMedianoche - ahora;
-
-    const timeout = setTimeout(() => {
-      cargarTurnos();
-    }, tiempoHastaMedianoche);
-
-    return () => clearTimeout(timeout);
+    cargarDatos();
   }, []);
 
-  // Función para obtener la info de la cancha actual sin que rompa si precios es null
-  const infoCancha = () => {
-    if (!precios) return { precio: "...", sena: "..." };
+  // Lógica de Precios Segura
+  const info = precios ? {
+    precio: canchaSeleccionada === "interior" ? (precios.interior ?? 0) : (precios.exterior ?? 0),
+    sena: canchaSeleccionada === "interior" ? (precios.sena_interior ?? 0) : (precios.sena_exterior ?? 0)
+  } : { precio: "...", sena: "..." };
 
-    if (canchaSeleccionada === "interior") {
-      return { 
-        precio: precios.interior ?? 0, 
-        sena: precios.sena_interior ?? 0 
-      };
-    } else {
-      return { 
-        precio: precios.exterior ?? 0, 
-        sena: precios.sena_exterior ?? 0 
-      };
-    }
-  };
+  // Lógica de Fechas (Formato YYYY-MM-DD)
+  const ahora = new Date();
+  const hoyStr = ahora.toISOString().slice(0, 10);
+  
+  const limiteDate = new Date();
+  limiteDate.setDate(ahora.getDate() + 7); // Ver 7 días a futuro
+  const limiteStr = limiteDate.toISOString().slice(0, 10);
 
-  const info = infoCancha();
-
-  const fechaHoy = new Date();
-  const hoyUTCString = new Date(fechaHoy.getFullYear(), fechaHoy.getMonth(), fechaHoy.getDate()).toISOString().slice(0, 10);
-  const limiteDate = new Date(fechaHoy);
-  limiteDate.setDate(fechaHoy.getDate() + 6);
-  const limiteUTCString = new Date(limiteDate.getFullYear(), limiteDate.getMonth(), limiteDate.getDate()).toISOString().slice(0, 10);
-
+  // Filtro de Turnos
   const turnosFiltrados = turnos.filter((t) => {
-      const fechaTurno = t.fecha.split(" ")[0]; 
-      // Usamos toLowerCase() en AMBOS lados para estar seguros
-      const canchaDB = t.cancha ? t.cancha.toLowerCase() : "";
-      const canchaBuscada = canchaSeleccionada.toLowerCase();
+    if (!t.fecha || !t.cancha) return false;
+    const fechaT = t.fecha.split("T")[0];
+    const canchaT = t.cancha.toLowerCase();
+    const buscada = canchaSeleccionada.toLowerCase();
 
-      return (
-        canchaDB === canchaBuscada &&
-        fechaTurno >= hoyStr &&
-        fechaTurno <= limiteStr
-      );
+    return canchaT === buscada && fechaT >= hoyStr && fechaT <= limiteStr;
   });
 
-  const turnosPorDia = turnosFiltrados.reduce((acc, turno) => {
-    const fechaKey = turno.fecha.split("T")[0];
-    if (!acc[fechaKey]) acc[fechaKey] = [];
-    acc[fechaKey].push(turno);
+  // Agrupar por día
+  const turnosPorDia = turnosFiltrados.reduce((acc, t) => {
+    const key = t.fecha.split("T")[0];
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(t);
     return acc;
   }, {});
 
-  const handleReserva = (turno) => {
-    if (turno.estado === "disponible") {
-      navigate("/login", { state: { from: `/reservar/${turno.id}`, turno } });
-    }
-  };
-
   return (
     <section id="reserva" className="reservas-section">
-      <h1>
-        Reservá tu Turno{" "}
-        {canchaSeleccionada === "interior" ? "en nuestra Cancha Interior" : "en nuestra Cancha de Blindex"}
-      </h1>
+      <h1>Reservá tu Turno en nuestra Cancha {canchaSeleccionada === "interior" ? "Interior" : "de Blindex"}</h1>
       
-      <p>
-        El valor del turno es de <strong>${info.precio}</strong>.<br />
-        Para que la reserva sea confirmada se debe abonar una seña de <strong>${info.sena}</strong>.<br />
-        Si tenés alguna duda, podés comunicarte con nosotros a través de nuestras redes sociales o por WhatsApp.
-      </p>
-
-      {/*<div className="cancha-selector">
-        <button
-          className={canchaSeleccionada === "interior" ? "activo" : ""}
-          onClick={() => setCanchaSeleccionada("interior")}
-          disabled={!canchasHabilitadas.interior}
-        >
-          Interior
-        </button>
-        <button
-          className={canchaSeleccionada === "exterior" ? "activo" : ""}
-          onClick={() => setCanchaSeleccionada("exterior")}
-          disabled={!canchasHabilitadas.exterior}
-        >
-          Exterior
-        </button>
-      </div>*/}
-
-      <div className="reserva-container">
-        {Object.entries(turnosPorDia).map(([fecha, lista]) => (
-          <div key={fecha} className="reserva-dia">
-            <h3>
-              {new Date(`${fecha}T00:00:00`).toLocaleDateString("es-AR", { weekday: "long", day: "numeric" })}
-            </h3>
-            <div className="turnos-lista">
-              {lista.map((t) => (
-                <button
-                  key={t.id}
-                  className={`turno ${t.estado}`}
-                  disabled={t.estado !== "disponible"}
-                  onClick={() => handleReserva(t)}
-                >
-                  {t.hora.slice(0, 5)}
-                </button>
-              ))}
-            </div>
-          </div>
-        ))}
+      <div className="precios-info">
+        <p>Valor del turno: <strong>${info.precio}</strong> | Seña: <strong>${info.sena}</strong></p>
       </div>
+
+      {loading ? <p>Cargando turnos...</p> : (
+        <div className="reserva-container">
+          {Object.keys(turnosPorDia).length > 0 ? (
+            Object.entries(turnosPorDia).map(([fecha, lista]) => (
+              <div key={fecha} className="reserva-dia">
+                <h3>{new Date(`${fecha}T00:00:00`).toLocaleDateString("es-AR", { weekday: "long", day: "numeric" })}</h3>
+                <div className="turnos-lista">
+                  {lista.sort((a,b) => a.hora.localeCompare(b.hora)).map((t) => (
+                    <button 
+                      key={t.id} 
+                      className={`turno ${t.estado}`}
+                      disabled={t.estado !== "disponible"}
+                      onClick={() => navigate("/login", { state: { from: `/reservar/${t.id}`, turno: t } })}
+                    >
+                      {t.hora.slice(0, 5)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))
+          ) : <p>No hay turnos disponibles para esta cancha en los próximos días.</p>}
+        </div>
+      )}
     </section>
   );
 };
