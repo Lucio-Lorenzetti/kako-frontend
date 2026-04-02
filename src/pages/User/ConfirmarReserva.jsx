@@ -167,7 +167,7 @@ const ConfirmarReserva = () => {
 
               {isFormValid() && (
                 <MercadoPagoButton
-                  monto={turno.precio * Number(jugadores)}
+                  monto={turno.sena * Number(jugadores)}
                   descripcion={`Reserva cancha ${turno.cancha} - ${new Date(
                     turno.fecha
                   ).toLocaleDateString("es-AR")} ${turno.hora.slice(0, 5)}hs`}
