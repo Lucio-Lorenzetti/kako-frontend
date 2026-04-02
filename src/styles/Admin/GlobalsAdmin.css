@@ -26,16 +26,16 @@
 
 .general-description,
 .general-filters {
-  text-align: center;  
-  margin-top: 0%;
-  margin-bottom: 0%;
+  margin: 0 auto;        
+  width: 100%;
   font-size: 1rem;
   color: #000000;
   font-weight: bold;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
+  justify-content: center; 
+  align-items: center;    
+  gap: 20px;              
 }
 
 /* Inputs y selects con mismo estilo */
@@ -64,7 +64,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: auto; /* empuja a la derecha */
+  justify-content: center; 
 }
 
 .general-pagination-inline button {

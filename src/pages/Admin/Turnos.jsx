@@ -10,7 +10,7 @@ export default function Turnos() {
   const [searchDate, setSearchDate] = useState("");
   const [selectedCancha, setSelectedCancha] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(16); // Sugerencia: 16 suele verse mejor en tablas
+  const [perPage, setPerPage] = useState(8); // Sugerencia: 16 suele verse mejor en tablas
 
   useEffect(() => {
     api
@@ -122,9 +122,9 @@ export default function Turnos() {
 
           {perPage !== "all" && totalPages > 1 && (
             <div className="general-pagination-inline">
-              <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>◀</button>
+              <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}></button>
               <span>{currentPage} / {totalPages}</span>
-              <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>▶</button>
+              <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}></button>
             </div>
           )}
         </div>

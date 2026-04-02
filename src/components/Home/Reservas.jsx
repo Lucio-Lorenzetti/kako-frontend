@@ -48,7 +48,7 @@ const Reserva = () => {
   const hoyStr = ahora.toISOString().slice(0, 10);
   
   const limiteDate = new Date();
-  limiteDate.setDate(ahora.getDate() + 7); // Ver 7 días a futuro
+  limiteDate.setDate(ahora.getDate() + 6); // Ver 7 días a futuro
   const limiteStr = limiteDate.toISOString().slice(0, 10);
 
   // Filtro de Turnos
@@ -74,7 +74,11 @@ const Reserva = () => {
       <h1>Reservá tu Turno en nuestra Cancha {canchaSeleccionada === "interior" ? "Interior" : "de Blindex"}</h1>
       
       <div className="precios-info">
-        <p>Valor del turno: <strong>${info.precio}</strong> | Seña: <strong>${info.sena}</strong></p>
+        <p>
+          El valor del turno es de <strong>${info.precio}</strong>.<br />
+          La reserva se cofnirma abonando una seña de <strong>${info.sena}</strong>.<br />
+          Si tenés alguna duda, podés comunicarte con nosotros por WhatsApp.
+        </p>
       </div>
 
       {loading ? <p>Cargando turnos...</p> : (

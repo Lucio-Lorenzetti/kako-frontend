@@ -10,7 +10,7 @@ export default function Usuarios() {
   const [error, setError] = useState(null);
 
   // Filtros y paginación
-  const [searchTerm, setSearchTerm] = useState(""); // buscar por nombre o apellido
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(8);
 
@@ -18,7 +18,8 @@ export default function Usuarios() {
     api
       .get("/admin/usuarios")
       .then((res) => {
-        setUsuarios(res.data);
+        // Validación de array para evitar crashes
+        setUsuarios(Array.isArray(res.data) ? res.data : []);
         setLoading(false);
       })
       .catch((err) => {
@@ -56,29 +57,51 @@ export default function Usuarios() {
       });
   };
 
-  // Filtrado por búsqueda
-  const filteredUsuarios = usuarios.filter((u) => {
-    const nombreCompleto = `${u.name} ${u.apellido || ""}`.toLowerCase();
+  // --- LÓGICA DE FILTRADO Y ORDENAMIENTO ---
+  
+  // 1. Filtrar por búsqueda
+  const filtered = usuarios.filter((u) => {
+    const nombreCompleto = `${u.name || ""} ${u.apellido || ""}`.toLowerCase();
     return nombreCompleto.includes(searchTerm.toLowerCase());
   });
 
-  // Paginación
-  const totalItems = filteredUsuarios.length;
-  const totalPages = perPage === "all" ? 1 : Math.ceil(totalItems / perPage);
+  // 2. Ordenar: Admins primero, luego alfabético
+  const sortedUsuarios = [...filtered].sort((a, b) => {
+    const pesoRol = { admin: 1, user: 2 };
+    
+    const rolA = a.role?.toLowerCase() || "user";
+    const rolB = b.role?.toLowerCase() || "user";
+
+    // Si los roles son diferentes, ponemos el de menor peso (admin) arriba
+    if (pesoRol[rolA] !== pesoRol[rolB]) {
+      return pesoRol[rolA] - pesoRol[rolB];
+    }
+
+    // Si son del mismo rol, orden alfabético por nombre
+    const nombreA = a.name?.toLowerCase() || "";
+    const nombreB = b.name?.toLowerCase() || "";
+    return nombreA.localeCompare(nombreB);
+  });
+
+  // --- LÓGICA DE PAGINACIÓN ---
+  const totalItems = sortedUsuarios.length;
+  const itemsPerPage = perPage === "all" ? totalItems : perPage;
+  const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+  
   const displayedUsuarios =
     perPage === "all"
-      ? filteredUsuarios
-      : filteredUsuarios.slice((currentPage - 1) * perPage, currentPage * perPage);
+      ? sortedUsuarios
+      : sortedUsuarios.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <div className="usuarios-container">
       <div className="general-card">
         <h2 className="general-title">Gestión de Usuarios</h2>
         <p className="general-description">
-          Aquí puedes ver todos los usuarios y modificar su rol o estado.
+          Administrá los roles y estados de los usuarios registrados.
         </p>
 
-        {/* Filtros */}
+        {/* Filtros Centrados */}
         <div className="general-filters">
           <label>
             Buscar por nombre o apellido:{" "}
@@ -93,7 +116,7 @@ export default function Usuarios() {
           </label>
 
           <label>
-            Usuarios por página:{" "}
+            Mostrar:
             <select
               value={perPage}
               onChange={(e) => {
@@ -109,7 +132,7 @@ export default function Usuarios() {
             </select>
           </label>
 
-          {/* Paginación arriba */}
+          {/* Paginación Inline */}
           {perPage !== "all" && totalPages > 1 && (
             <div className="general-pagination-inline">
               <button
@@ -119,7 +142,7 @@ export default function Usuarios() {
                 ◀
               </button>
               <span>
-                {currentPage} de {totalPages}
+                {currentPage} / {totalPages}
               </span>
               <button
                 onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
@@ -160,10 +183,10 @@ export default function Usuarios() {
                           onChange={(e) =>
                             handleUsuarioChange(usuario.id, "role", e.target.value)
                           }
-                          className={`rol-select ${usuario.role?.toLowerCase() || ""}`}
+                          className={`estado-select ${usuario.role?.toLowerCase() || ""}`}
                         >
                           <option value="user">Usuario</option>
-                          <option value="admin">Administrador</option>
+                          <option value="admin">Admin</option>
                         </select>
                       </td>
                       <td>
