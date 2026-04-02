@@ -120,7 +120,7 @@ const ConfirmarReserva = () => {
                 <option value="4">4</option>
               </select>
               <p className="precio-total">
-                Precio total estimado: $
+                Monto de la seña a pagar: $
                 {(turno.sena * Number(jugadores)).toLocaleString("es-AR")}
               </p>
             </label>
