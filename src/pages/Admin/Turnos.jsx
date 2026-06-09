@@ -10,7 +10,7 @@ export default function Turnos() {
   const [searchDate, setSearchDate] = useState("");
   const [selectedCancha, setSelectedCancha] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(8);
+  const [perPage, setPerPage] = useState(7);
 
   // 1. Definimos los horarios originales según tu lista
   const horariosOriginales = [

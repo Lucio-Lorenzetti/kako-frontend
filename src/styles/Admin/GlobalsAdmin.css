@@ -90,6 +90,7 @@
 /*Tablas*/
 .general-table-wrapper {
   overflow-y: auto;
+  max-height: 60vh;
 }
 
 .general-table {

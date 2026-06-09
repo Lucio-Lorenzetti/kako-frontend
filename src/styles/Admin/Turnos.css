@@ -1,12 +1,13 @@
 .turnos-container {
   background: url('../../assets/f5.jpg') center/cover no-repeat;
   padding: 40px 20px;
-  height: 90vh;
+  min-height: 90vh;
   position: relative;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 60px;       
 }
 
 /* Overlay degradado */
