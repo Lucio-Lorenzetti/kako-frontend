@@ -15,8 +15,7 @@ export default function Turnos() {
   // 1. Definimos los horarios originales según tu lista
   const horariosOriginales = [
     "13:00", "14:30", "16:00", "17:30", 
-    "18:00", "19:30", "21:00", "22:30"
-  ];
+    "19:00", "20:30", "22:00"];
 
   const fetchTurnos = () => {
     setLoading(true);
