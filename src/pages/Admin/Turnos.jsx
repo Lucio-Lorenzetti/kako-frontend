@@ -101,7 +101,7 @@ export default function Turnos() {
           </label>
           <label>Por página: 
             <select value={perPage} onChange={(e) => { setPerPage(e.target.value === "all" ? "all" : parseInt(e.target.value)); setCurrentPage(1); }}>
-              {[8, 16, 32, 48, "all"].map((n) => <option key={n} value={n}>{n === "all" ? "Todos" : n}</option>)}
+              {[7, 14, 28, 42, "all"].map((n) => <option key={n} value={n}>{n === "all" ? "Todos" : n}</option>)}
             </select>
           </label>
 
