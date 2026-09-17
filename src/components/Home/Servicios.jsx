@@ -35,7 +35,9 @@ const Servicios = () => {
         {servicios.map((s, i) => (
           <div key={i} className="servicio-card">
             <h3>{s.nombre}</h3>
-            {s.imagen && <img src={s.imagen} alt={s.nombre} />}
+            {s.imagen && (
+              <img src={s.imagen} alt={s.nombre} loading="lazy" decoding="async" />
+            )}
             <p>{s.descripcion}</p>
           </div>
         ))}
