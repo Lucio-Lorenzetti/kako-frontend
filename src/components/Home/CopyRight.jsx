@@ -1,5 +1,6 @@
 import { FaWhatsapp, FaInstagram, FaEnvelope } from "react-icons/fa";
 import Logo from "../../assets/logo-kako-blanco.png";
+import { version } from "../../../package.json";
 import "../../styles/User/CopyRight.css";
 
 const WHATSAPP_URL =
@@ -59,6 +60,7 @@ const CopyRight = () => {
       <div className="footer-bottom">
         <span>&copy; {year} Kako Padel. Todos los derechos reservados.</span>
         <span>Bahía Blanca &bull; Buenos Aires &bull; Argentina</span>
+        <span>v{version}</span>
       </div>
     </footer>
   );
