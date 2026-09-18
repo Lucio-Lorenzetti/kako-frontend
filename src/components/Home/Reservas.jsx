@@ -43,13 +43,22 @@ const Reserva = () => {
     sena: canchaSeleccionada === "interior" ? (precios.sena_interior ?? 0) : (precios.sena_exterior ?? 0)
   } : { precio: "...", sena: "..." };
 
-  // Lógica de Fechas (Formato YYYY-MM-DD)
+  // Lógica de Fechas (Formato YYYY-MM-DD, en horario LOCAL)
+  // Ojo: toISOString() convierte a UTC y en Argentina (UTC-3) eso puede
+  // adelantar la fecha, corriendo toda la semana un día para adelante.
+  const aFechaLocalStr = (d) => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  };
+
   const ahora = new Date();
-  const hoyStr = ahora.toISOString().slice(0, 10);
-  
-  const limiteDate = new Date();
-  limiteDate.setDate(ahora.getDate() + 6); // Ver 7 días a futuro
-  const limiteStr = limiteDate.toISOString().slice(0, 10);
+  const hoyStr = aFechaLocalStr(ahora);
+
+  const limiteDate = new Date(ahora);
+  limiteDate.setDate(ahora.getDate() + 6); // Ver 7 días a futuro (hoy incluido)
+  const limiteStr = aFechaLocalStr(limiteDate);
 
   // Filtro de Turnos
   const turnosFiltrados = turnos.filter((t) => {
