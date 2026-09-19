@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/User/Home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
@@ -17,6 +18,7 @@ import PagoFailure from "./pages/User/PagoFailure";
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         {/* Página principal */}
         <Route path="/" element={<Home />} />
