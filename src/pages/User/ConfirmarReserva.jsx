@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import MercadoPagoButton from "../../components/Home/MercadoPagoButton";
 import api from "../../api/api";
 import Header from "../../components/Auth/Header";
+import CopyRight from "../../components/Home/CopyRight";
 import "../../styles/User/ConfirmarReserva.css";
 
 const ConfirmarReserva = () => {
@@ -220,6 +221,7 @@ const ConfirmarReserva = () => {
         {error && <p className="error">{error}</p>}
       </div>
     </section>
+    <CopyRight />
   </>
 );
 

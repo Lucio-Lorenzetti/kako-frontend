@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import Header from "../../components/Auth/Header";
+import CopyRight from "../../components/Home/CopyRight";
 import "../../styles/Auth.css";
 
 const Login = () => {
@@ -61,6 +62,7 @@ const Login = () => {
           {error && <p className="error">{error}</p>}
         </div>
       </section>
+      <CopyRight />
     </>
   );
 };

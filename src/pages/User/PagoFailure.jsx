@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import "../../styles/User/Pagos.css";
 import Logo from "../../assets/Logo-Color.png";
+import CopyRight from "../../components/Home/CopyRight";
 
 export default function PagoFailure() {
   const navigate = useNavigate();
 
   return (
+    <>
     <section className="pagos-section">
       <div className="overlay-pagos">
         <img src={Logo} alt="Logo cancha" className="logo" />
@@ -16,5 +18,7 @@ export default function PagoFailure() {
         </button>
       </div>
     </section>
+    <CopyRight />
+    </>
   );
 }

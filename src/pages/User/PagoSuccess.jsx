@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import api from "../../api/api";
 import "../../styles/User/Pagos.css";
 import Logo from "../../assets/Logo-Color.png";
+import CopyRight from "../../components/Home/CopyRight";
 
 export default function PagoSuccess() {
   const navigate = useNavigate();
@@ -24,7 +25,12 @@ export default function PagoSuccess() {
   }, []);
 
   if (!reserva) {
-    return <p>Cargando información de la reserva...</p>;
+    return (
+      <>
+        <p>Cargando información de la reserva...</p>
+        <CopyRight />
+      </>
+    );
   }
 
   const phone = "5492915024986";
@@ -46,6 +52,7 @@ Cancha: ${reserva.turno.cancha}
   const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
   return (
+    <>
     <section className="pagos-section">
       <div className="overlay-pagos">
         <img src={Logo} alt="Logo cancha" className="logo" />
@@ -80,5 +87,7 @@ Cancha: ${reserva.turno.cancha}
         </div>
       </div>
     </section>
+    <CopyRight />
+    </>
   );
 }
