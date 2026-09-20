@@ -28,23 +28,28 @@
 
 
 .logout-button-container {
-  padding-right: 2%;
   height: 100%;
   position: relative;
   display: flex;
+  align-items: center;
 }
 
 .logout-button {
   background: transparent;
   color: #fff;
-  padding-right: 10%;
-  padding-top: 1%;
+  padding: 8px 4px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .logout-button:hover {
   border: 0px;
+  color: var(--color-kako);
+}
+
+.logout-button:focus,
+.logout-button:focus-visible {
+  outline: none;
   color: var(--color-kako);
 }
 
