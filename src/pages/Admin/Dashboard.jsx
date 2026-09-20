@@ -139,6 +139,7 @@ export default function Dashboard() {
           <p>No hay reservas hoy.</p>
         )}
         {!loading && !error && reservas.length > 0 && (
+          <div className="general-table-wrapper">
           <table className="general-table">
             <thead>
               <tr>
@@ -215,6 +216,7 @@ export default function Dashboard() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
 

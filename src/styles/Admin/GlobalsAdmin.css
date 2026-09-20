@@ -90,11 +90,14 @@
 /*Tablas*/
 .general-table-wrapper {
   overflow-y: auto;
+  overflow-x: auto;
   max-height: 60vh;
+  -webkit-overflow-scrolling: touch;
 }
 
 .general-table {
   width: 100%;
+  min-width: 480px;
   border-collapse: collapse;
   font-size: 0.95rem;
 }
@@ -121,6 +124,7 @@
 /* Responsive */
 @media (max-width: 900px) {
   .general-card {
+    max-width: 90%;
     padding: 1.5rem;
     height: auto; /* Se adapta al contenido en móviles */
   }
@@ -138,5 +142,16 @@
 
   .general-table tbody tr {
     height: auto; /* Ajuste automático en pantallas pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .general-card {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .general-title {
+    font-size: 1.4rem;
   }
 }

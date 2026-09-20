@@ -4,6 +4,13 @@
   --font-main: Arial, sans-serif;
 }
 
+/* Sin esto, un elemento con width:100% + padding termina siendo más
+   ancho que su contenedor (ej: los headers con padding lateral),
+   provocando overflow horizontal y contenido cortado en mobile. */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 /* Reset base */
 html, body, #root {
   width: 100%;
