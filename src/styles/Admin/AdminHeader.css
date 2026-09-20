@@ -176,6 +176,14 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
 
+  .header-admin-container.mobile .admin-button {
+    padding: 0;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
   .header-admin-container.mobile .admin-dropdown {
     position: static;
     top: auto;
