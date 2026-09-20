@@ -29,6 +29,7 @@ const Header = () => {
 
       <nav className={`header-nav ${isMenuOpen ? "open" : ""}`}>
         <a href="#index" onClick={() => handleNavClick("index")}>Inicio</a>
+        <a href="#como-reservar" onClick={() => handleNavClick("como-reservar")}>Cómo Reservar</a>
         <a href="#servicios" onClick={() => handleNavClick("servicios")}>Servicios</a>
         <a href="#reservas" onClick={() => handleNavClick("reservas")}>Turnos</a>
         <a href="#contacto" onClick={() => handleNavClick("contacto")}>Contacto</a>

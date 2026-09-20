@@ -51,6 +51,7 @@ export default function Header() {
         <a href="/admin/reservas">Reservas</a>
         <a href="/admin/usuarios">Usuarios</a>
         <a href="/admin/turnos">Turnos</a>
+        <a href="/admin/ayuda">Ayuda</a>
 
         {/* Admin en menú móvil */}
         <div className="header-admin-container mobile">

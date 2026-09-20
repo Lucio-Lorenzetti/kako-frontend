@@ -11,6 +11,7 @@ import Dashboard from "./pages/Admin/Dashboard";
 import Reservas from "./pages/Admin/Reservas";
 import Usuarios from "./pages/Admin/Usuarios";
 import Turnos from "./pages/Admin/Turnos";
+import Ayuda from "./pages/Admin/Ayuda";
 
 import PagoSuccess from "./pages/User/PagoSuccess";
 import PagoFailure from "./pages/User/PagoFailure";
@@ -39,6 +40,7 @@ function App() {
         <Route path="/admin/reservas" element={<AdminLayout><Reservas /></AdminLayout>} />
         <Route path="/admin/usuarios" element={<AdminLayout><Usuarios /></AdminLayout>} />
         <Route path="/admin/turnos" element={<AdminLayout><Turnos /></AdminLayout>} />
+        <Route path="/admin/ayuda" element={<AdminLayout><Ayuda /></AdminLayout>} />
 
 
         <Route path="/pago/success" element={<PagoSuccess />} />

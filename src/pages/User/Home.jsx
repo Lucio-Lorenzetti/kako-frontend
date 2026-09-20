@@ -1,5 +1,6 @@
 import Header from "../../components/Home/Header";
 import Index from "../../components/Home/Index";
+import ComoReservar from "../../components/Home/ComoReservar";
 import Servicios from "../../components/Home/Servicios";
 import Reservas from "../../components/Home/Reservas";
 import Contacto from "../../components/Home/Contacto";
@@ -13,6 +14,9 @@ const Home = () => {
       <main>
         <section id="index">
           <Index />
+        </section>
+        <section id="como-reservar">
+          <ComoReservar />
         </section>
         <section id="servicios">
           <Servicios />

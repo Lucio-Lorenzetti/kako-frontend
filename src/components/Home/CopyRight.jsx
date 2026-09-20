@@ -33,6 +33,7 @@ const CopyRight = () => {
         <div className="footer-col">
           <h4>Navegación</h4>
           <a href="#index">Inicio</a>
+          <a href="#como-reservar">Cómo Reservar</a>
           <a href="#servicios">Servicios</a>
           <a href="#reservas">Turnos</a>
           <a href="#contacto">Contacto</a>
