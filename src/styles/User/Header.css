@@ -157,6 +157,7 @@
     transform: translateX(0);
     transition: transform 0.4s ease-in-out;
     align-items: center;
+    justify-content: center;
     gap: 0; /* Remove gap in mobile menu */
   }
   
@@ -231,6 +232,7 @@
   height:calc(100vh - 60px);
   background:rgba(122,166,199,0.95);
   align-items:center;
+  justify-content:center;
 }
 
 .header-nav.open a{

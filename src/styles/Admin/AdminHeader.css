@@ -152,6 +152,7 @@
     transform: translateX(0);
     transition: transform 0.4s ease-in-out;
     align-items: center;
+    justify-content: center;
     gap: 0; /* Remove gap in mobile menu */
   }
   
