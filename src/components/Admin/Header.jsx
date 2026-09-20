@@ -3,28 +3,23 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // 👈 importar navigate
 import Logo from "../../assets/logo-kako-blanco.png";
 import "../../styles/Admin/AdminHeader.css";
-import api from "../../api/api"; // 👈 para cerrar sesión en backend
+import { useAuth } from "../../context/AuthContext";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   // 🔹 Función para cerrar sesión
   const handleLogout = async () => {
-    try {
-      await api.post("/logout"); // <- endpoint de logout en Laravel Sanctum
-      localStorage.removeItem("token"); // <- limpiar token del cliente
-      navigate("/admin/login"); // <- redirigir al login admin
-    } catch (err) {
-      console.error("Error al cerrar sesión", err);
-      navigate("/admin/login"); // fallback: redirigir igual
-    }
+    await logout();
+    navigate("/admin/login");
   };
 
   // 🔹 Función para ir al Home (logo)
-  const goHome = () => {
-    localStorage.removeItem("token"); // <- opcional: también cerrar sesión
+  const goHome = async () => {
+    await logout(); // <- opcional: también cerrar sesión
     navigate("/"); // <- home público
   };
 

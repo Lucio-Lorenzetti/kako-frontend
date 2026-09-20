@@ -2,6 +2,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import MercadoPagoButton from "../../components/Home/MercadoPagoButton";
 import api from "../../api/api";
+import { useAuth } from "../../context/AuthContext";
 import Header from "../../components/Auth/Header";
 import CopyRight from "../../components/Home/CopyRight";
 import "../../styles/User/ConfirmarReserva.css";
@@ -10,29 +11,15 @@ const ConfirmarReserva = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
+  const { user } = useAuth();
 
   const [turno, setTurno] = useState(location.state?.turno || null);
-  const [user, setUser] = useState(null);
   const [jugadores, setJugadores] = useState("2");
   const [buscoPareja, setBuscoPareja] = useState("false");
   const [prestamoPaletas, setPrestamoPaletas] = useState("false");
   const [telefono, setTelefono] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  // 🔹 Cargar información del usuario logueado
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      api
-        .get("/me", { headers: { Authorization: `Bearer ${token}` } })
-        .then((res) => {
-          console.log("Usuario cargado:", res.data); // 👈 Verás esto en la consola del navegador
-          setUser(res.data);
-        })
-        .catch(() => setError("No se pudo cargar la información del usuario"));
-    }
-  }, []);
 
   // 🔹 Prellenar el número de teléfono si el usuario lo tiene guardado
   useEffect(() => {

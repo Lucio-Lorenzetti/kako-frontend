@@ -11,11 +11,7 @@ export default function PagoSuccess() {
   const [wpEnviado, setWpEnviado] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    api.get("/mis-reservas/ultima", {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    api.get("/mis-reservas/ultima")
     .then(res => {
       setReserva(res.data);
     })

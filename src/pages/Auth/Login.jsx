@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import api from "../../api/api";
+import { useAuth } from "../../context/AuthContext";
 import Header from "../../components/Auth/Header";
 import CopyRight from "../../components/Home/CopyRight";
 import "../../styles/Auth.css";
@@ -8,6 +9,7 @@ import "../../styles/Auth.css";
 const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +21,7 @@ const Login = () => {
       const response = await api.post("/login", { email, password });
 
       if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
+        login(response.data.token, response.data.user);
       }
 
       const destino = location.state?.from || "/";

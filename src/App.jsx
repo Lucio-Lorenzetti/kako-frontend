@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
+import { AuthProvider } from "./context/AuthContext";
 import Home from "./pages/User/Home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
@@ -19,34 +20,36 @@ import PagoFailure from "./pages/User/PagoFailure";
 function App() {
   return (
     <Router>
-      <ScrollToTop />
-      <Routes>
-        {/* Página principal */}
-        <Route path="/" element={<Home />} />
+      <AuthProvider>
+        <ScrollToTop />
+        <Routes>
+          {/* Página principal */}
+          <Route path="/" element={<Home />} />
 
-        {/* Login */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+          {/* Login */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-        {/* Confirmación de turno */}
-        <Route path="/reservar/:id" element={<ConfirmarReserva />} />
+          {/* Confirmación de turno */}
+          <Route path="/reservar/:id" element={<ConfirmarReserva />} />
 
-         {/* Login Admin */}
-        <Route path="/admin/login" element={<LoginAdmin />} />
-        
-        {/* Panel Admin */}
-        <Route path="/admin" element={<AdminLayout><Dashboard /></AdminLayout>} />
-        <Route path="/admin/dashboard" element={<AdminLayout><Dashboard /></AdminLayout>} />
-        <Route path="/admin/reservas" element={<AdminLayout><Reservas /></AdminLayout>} />
-        <Route path="/admin/usuarios" element={<AdminLayout><Usuarios /></AdminLayout>} />
-        <Route path="/admin/turnos" element={<AdminLayout><Turnos /></AdminLayout>} />
-        <Route path="/admin/ayuda" element={<AdminLayout><Ayuda /></AdminLayout>} />
+           {/* Login Admin */}
+          <Route path="/admin/login" element={<LoginAdmin />} />
+
+          {/* Panel Admin */}
+          <Route path="/admin" element={<AdminLayout><Dashboard /></AdminLayout>} />
+          <Route path="/admin/dashboard" element={<AdminLayout><Dashboard /></AdminLayout>} />
+          <Route path="/admin/reservas" element={<AdminLayout><Reservas /></AdminLayout>} />
+          <Route path="/admin/usuarios" element={<AdminLayout><Usuarios /></AdminLayout>} />
+          <Route path="/admin/turnos" element={<AdminLayout><Turnos /></AdminLayout>} />
+          <Route path="/admin/ayuda" element={<AdminLayout><Ayuda /></AdminLayout>} />
 
 
-        <Route path="/pago/success" element={<PagoSuccess />} />
-        <Route path="/pago/failure" element={<PagoFailure />} />
+          <Route path="/pago/success" element={<PagoSuccess />} />
+          <Route path="/pago/failure" element={<PagoFailure />} />
 
-      </Routes>
+        </Routes>
+      </AuthProvider>
     </Router>
   );
 }

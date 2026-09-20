@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
+import { useAuth } from "../../context/AuthContext";
 import "../../styles/User/Reservas.css";
 
 const Reserva = () => {
@@ -9,6 +10,15 @@ const Reserva = () => {
   const [precios, setPrecios] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+
+  const irAReservar = (turno) => {
+    if (isAuthenticated) {
+      navigate(`/reservar/${turno.id}`, { state: { turno } });
+    } else {
+      navigate("/login", { state: { from: `/reservar/${turno.id}`, turno } });
+    }
+  };
 
   const cargarDatos = () => {
     setLoading(true);
@@ -102,7 +112,7 @@ const Reserva = () => {
                       key={t.id} 
                       className={`turno ${t.estado}`}
                       disabled={t.estado !== "disponible"}
-                      onClick={() => navigate("/login", { state: { from: `/reservar/${t.id}`, turno: t } })}
+                      onClick={() => irAReservar(t)}
                     >
                       {t.hora.slice(0, 5)}
                     </button>

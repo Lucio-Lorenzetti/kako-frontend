@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
+import { useAuth } from "../../context/AuthContext";
 import Header from "../../components/Auth/Header";
 import "../../styles/Auth.css";
 
 export default function LoginAdmin() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,10 +24,10 @@ export default function LoginAdmin() {
 
       // VALIDACIÓN: Verificamos que el rol sea exactamente 'admin'
       if (token && user.role === "admin") {
-        localStorage.setItem("token", token);
+        login(token, user);
         // Opcional: guardar nombre para mostrarlo en el dashboard
-        localStorage.setItem("userName", user.name); 
-        
+        localStorage.setItem("userName", user.name);
+
         navigate("/admin");
       } else {
         // Si el usuario existe pero es un cliente común ('user')
