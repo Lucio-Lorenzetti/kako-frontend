@@ -196,9 +196,18 @@
     margin-top: 10px;
   }
 
-  .header-admin-container.mobile .admin-dropdown a {
+  .header-admin-container.mobile .admin-dropdown a,
+  .header-admin-container.mobile .admin-dropdown button {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: none;
     color: #fff;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
     padding: 10px;
+    cursor: pointer;
   }
 }
 
