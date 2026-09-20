@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
+import Logo from "../assets/logo-kako-blanco.png";
 
 const AuthContext = createContext(null);
 
@@ -60,7 +61,8 @@ export const AuthProvider = ({ children }) => {
   if (loading) {
     return (
       <div className="auth-splash">
-        <p>Cargando...</p>
+        <img src={Logo} alt="Kako Padel" className="auth-splash-logo" />
+        <span className="auth-splash-spinner" aria-hidden="true"></span>
       </div>
     );
   }

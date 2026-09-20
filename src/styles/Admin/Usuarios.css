@@ -1,7 +1,8 @@
 .usuarios-container {
   background: url('../../assets/f6.jpg') center/cover no-repeat;
   padding: 40px 20px;
-  height: 90vh;
+  min-height: calc(100vh - 60px);
+  margin-top: 60px;
   position: relative;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   display: flex;

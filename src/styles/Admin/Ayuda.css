@@ -1,7 +1,8 @@
 .ayuda-container {
   background: url('../../assets/f4.jpg') center/cover no-repeat;
   padding: 40px 20px;
-  min-height: 90vh;
+  min-height: calc(100vh - 60px);
+  margin-top: 60px;
   position: relative;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
@@ -29,28 +30,38 @@
 }
 
 .ayuda-card {
-  background: rgba(255, 255, 255, 0.85);
+  background-color: rgba(150, 119, 157, 0.684);
   border-radius: 12px;
   border: 3px solid var(--color-padel);
   padding: 16px 18px;
   text-align: left;
+  color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.ayuda-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .ayuda-card h3 {
   margin: 0 0 10px;
-  color: var(--color-kako);
+  color: #fff;
   font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .ayuda-card ul {
   margin: 0;
   padding-left: 20px;
-  color: #222;
+  color: #fff;
 }
 
 .ayuda-card li {
   margin-bottom: 6px;
   font-size: 0.92rem;
+  font-weight: bold;
   line-height: 1.35;
 }
 

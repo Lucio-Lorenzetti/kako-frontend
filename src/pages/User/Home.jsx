@@ -15,14 +15,14 @@ const Home = () => {
         <section id="index">
           <Index />
         </section>
-        <section id="como-reservar">
-          <ComoReservar />
-        </section>
         <section id="servicios">
           <Servicios />
         </section>
         <section id="reservas">
           <Reservas />
+        </section>
+        <section id="como-reservar">
+          <ComoReservar />
         </section>
         <section id="contacto">
           <Contacto />

@@ -6,9 +6,25 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, var(--color-kako), var(--color-padel));
+  background: url('../../assets/blindex.jpg') center/cover no-repeat;
   padding: 60px 20px;
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+.como-reservar-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(150, 119, 157, 0.85), rgba(122, 166, 199, 0.85));
+  z-index: 0;
+}
+
+.como-reservar-section h1,
+.como-reservar-subtitulo,
+.pasos-container {
+  position: relative;
+  z-index: 1;
 }
 
 .como-reservar-section h1 {
