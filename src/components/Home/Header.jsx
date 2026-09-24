@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/logo-kako-blanco.png";
+import { useAuth } from "../../context/AuthContext";
 import "../../styles/User/Header.css";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   const handleNavClick = (id) => {
     setIsMenuOpen(false); // Cierra el menú al clickear
@@ -33,7 +35,19 @@ const Header = () => {
         <a href="#reservas" onClick={() => handleNavClick("reservas")}>Turnos</a>
         <a href="#como-reservar" onClick={() => handleNavClick("como-reservar")}>Cómo Reservar</a>
         <a href="#contacto" onClick={() => handleNavClick("contacto")}>Contacto</a>
-        
+        {isAuthenticated && (
+          <a
+            href="/perfil"
+            onClick={(e) => {
+              e.preventDefault();
+              setIsMenuOpen(false);
+              navigate("/perfil");
+            }}
+          >
+            Mi Cuenta
+          </a>
+        )}
+
         <div className="header-admin-container mobile">
           <button className="admin-button" onClick={() => navigate("/admin/login")}>
             Administrador

@@ -8,7 +8,7 @@ const MercadoPagoButton = ({ monto, descripcion, reservaData = {}, onPagoExitoso
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const publicKey = "APP_USR-2f61352b-db3a-4da5-8ce3-8907a8e3d832";
+  const publicKey = import.meta.env.VITE_MP_PUBLIC_KEY;
 
   useEffect(() => {
     try {

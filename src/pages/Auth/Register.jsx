@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
+import { useAuth } from "../../context/AuthContext";
 import Header from "../../components/Auth/Header";
 import CopyRight from "../../components/Home/CopyRight";
+import GoogleLoginButton from "../../components/Auth/GoogleLoginButton";
 import "../../styles/Auth.css";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   // Inputs separados para nombre y apellido
   const [firstName, setFirstName] = useState("");
@@ -16,6 +19,11 @@ const Register = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const handleGoogleSuccess = (user, token) => {
+    login(token, user);
+    navigate("/");
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -65,6 +73,13 @@ const Register = () => {
       <section className="auth-container">
         <div className="auth-card">
           <h1>Registrarse</h1>
+
+          <div className="google-login-container">
+            <GoogleLoginButton onSuccess={handleGoogleSuccess} onError={setError} />
+          </div>
+
+          <div className="auth-divider">o con tu email</div>
+
           <form onSubmit={handleRegister}>
             <input
               type="text"

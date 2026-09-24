@@ -5,6 +5,7 @@ import Home from "./pages/User/Home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import ConfirmarReserva from "./pages/User/ConfirmarReserva";
+import Perfil from "./pages/User/Perfil";
 
 import LoginAdmin from "./pages/Auth/LoginAdmin";
 import AdminLayout from "./components/Admin/AdminLayout";
@@ -13,6 +14,7 @@ import Reservas from "./pages/Admin/Reservas";
 import Usuarios from "./pages/Admin/Usuarios";
 import Turnos from "./pages/Admin/Turnos";
 import Ayuda from "./pages/Admin/Ayuda";
+import PerfilAdmin from "./pages/Admin/Perfil";
 
 import PagoSuccess from "./pages/User/PagoSuccess";
 import PagoFailure from "./pages/User/PagoFailure";
@@ -33,6 +35,9 @@ function App() {
           {/* Confirmación de turno */}
           <Route path="/reservar/:id" element={<ConfirmarReserva />} />
 
+          {/* Perfil de usuario */}
+          <Route path="/perfil" element={<Perfil />} />
+
            {/* Login Admin */}
           <Route path="/admin/login" element={<LoginAdmin />} />
 
@@ -43,6 +48,7 @@ function App() {
           <Route path="/admin/usuarios" element={<AdminLayout><Usuarios /></AdminLayout>} />
           <Route path="/admin/turnos" element={<AdminLayout><Turnos /></AdminLayout>} />
           <Route path="/admin/ayuda" element={<AdminLayout><Ayuda /></AdminLayout>} />
+          <Route path="/admin/perfil" element={<AdminLayout><PerfilAdmin /></AdminLayout>} />
 
 
           <Route path="/pago/success" element={<PagoSuccess />} />

@@ -1,0 +1,15 @@
+.perfil-container {
+  min-height: calc(100vh - 40px);
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  position: relative;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: url('../../assets/f3.jpg') center/cover no-repeat;
+}
+
+.perfil-container .general-card {
+  max-width: 420px;
+}

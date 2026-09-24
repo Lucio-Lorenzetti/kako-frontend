@@ -49,6 +49,7 @@ export default function Header() {
         <a href="/admin/usuarios">Usuarios</a>
         <a href="/admin/turnos">Turnos</a>
         <a href="/admin/ayuda">Ayuda</a>
+        <a href="/admin/perfil">Mi Perfil</a>
 
         {/* Admin en menú móvil */}
         <div className="header-admin-container mobile">
