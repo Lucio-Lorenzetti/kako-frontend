@@ -65,10 +65,10 @@ export default function Usuarios() {
     return nombreCompleto.includes(searchTerm.toLowerCase());
   });
 
-  // 2. Ordenar: Admins primero, luego alfabético
+  // 2. Ordenar: Developer primero, luego Admins y Usuarios alfabético
   const sortedUsuarios = [...filtered].sort((a, b) => {
-    const pesoRol = { admin: 1, user: 2 };
-    
+    const pesoRol = { developer: 1, admin: 2, user: 3 };
+
     const rolA = a.role?.toLowerCase() || "user";
     const rolB = b.role?.toLowerCase() || "user";
 
@@ -162,7 +162,6 @@ export default function Usuarios() {
             <table className="general-table">
               <thead>
                 <tr>
-                  <th>ID</th>
                   <th>Nombre</th>
                   <th>Email</th>
                   <th>Rol</th>
@@ -174,7 +173,6 @@ export default function Usuarios() {
                 {displayedUsuarios.length > 0 ? (
                   displayedUsuarios.map((usuario) => (
                     <tr key={usuario.id}>
-                      <td>{usuario.id}</td>
                       <td>{usuario.name} {usuario.apellido ?? ""}</td>
                       <td>{usuario.email}</td>
                       <td>
@@ -187,6 +185,7 @@ export default function Usuarios() {
                         >
                           <option value="user">Usuario</option>
                           <option value="admin">Admin</option>
+                          <option value="developer">Developer</option>
                         </select>
                       </td>
                       <td>
@@ -213,7 +212,7 @@ export default function Usuarios() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6">No se encontraron usuarios</td>
+                    <td colSpan="5">No se encontraron usuarios</td>
                   </tr>
                 )}
               </tbody>

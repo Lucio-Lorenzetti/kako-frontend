@@ -38,14 +38,14 @@ export default function Dashboard() {
         setLoading(false);
       });
 
-    // Traer precios actuales
+    // Traer precios actuales (sin centavos, no nos interesan)
     api
       .get("/admin/precios")
       .then((res) => {
-        setPrecioInterior(res.data.interior ?? "");
-        setPrecioExterior(res.data.exterior ?? "");
-        setSenaInterior(res.data.sena_interior ?? "");
-        setSenaExterior(res.data.sena_exterior ?? "");
+        setPrecioInterior(res.data.interior != null ? Math.round(res.data.interior) : "");
+        setPrecioExterior(res.data.exterior != null ? Math.round(res.data.exterior) : "");
+        setSenaInterior(res.data.sena_interior != null ? Math.round(res.data.sena_interior) : "");
+        setSenaExterior(res.data.sena_exterior != null ? Math.round(res.data.sena_exterior) : "");
       })
       .catch((err) => console.error(err.response?.data || err.message));
 
@@ -80,6 +80,11 @@ export default function Dashboard() {
       );
     }
   };
+
+  // Ancho del input de precio en función de la cantidad de dígitos, para que el número no se corte.
+  // El input es border-box (padding 25px izq + 6px der + 4px borde = 35px), así que ese margen
+  // se suma aparte del ancho en "ch" que ocupan los dígitos.
+  const inputWidth = (valor) => `calc(${Math.max(String(valor ?? "").length, 1)}ch + 45px)`;
 
   // ───────────────────────────────
   // Expansión de filas
@@ -252,9 +257,11 @@ export default function Dashboard() {
                 <span className="input-symbol">$</span>
                 <input
                   type="number"
+                  step="1"
                   value={precioInterior}
                   onChange={(e) => setPrecioInterior(e.target.value)}
-                  className="input-tablas" 
+                  className="input-tablas"
+                  style={{ width: inputWidth(precioInterior) }}
                 />
               </div>
             </td>
@@ -263,9 +270,11 @@ export default function Dashboard() {
                 <span className="input-symbol">$</span>
                 <input
                   type="number"
+                  step="1"
                   value={senaInterior}
                   onChange={(e) => setSenaInterior(e.target.value)}
                   className={`input-tablas ${parseFloat(senaInterior) > parseFloat(precioInterior) ? "input-error" : ""}`}
+                  style={{ width: inputWidth(senaInterior) }}
                 />
               </div>
             </td>
@@ -296,9 +305,11 @@ export default function Dashboard() {
                 <span className="input-symbol">$</span>
                 <input
                   type="number"
+                  step="1"
                   value={precioExterior}
                   onChange={(e) => setPrecioExterior(e.target.value)}
-                  className="input-tablas" 
+                  className="input-tablas"
+                  style={{ width: inputWidth(precioExterior) }}
                 />
               </div>
             </td>
@@ -307,9 +318,11 @@ export default function Dashboard() {
                 <span className="input-symbol">$</span>
                 <input
                   type="number"
+                  step="1"
                   value={senaExterior}
                   onChange={(e) => setSenaExterior(e.target.value)}
                   className={`input-tablas ${parseFloat(senaExterior) > parseFloat(precioExterior) ? "input-error" : ""}`}
+                  style={{ width: inputWidth(senaExterior) }}
                 />
               </div>
             </td>

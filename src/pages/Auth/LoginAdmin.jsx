@@ -22,8 +22,8 @@ export default function LoginAdmin() {
 
       const { token, user } = response.data;
 
-      // VALIDACIÓN: Verificamos que el rol sea exactamente 'admin'
-      if (token && user.role === "admin") {
+      // VALIDACIÓN: admin y developer (developer tiene los mismos permisos que admin, y más)
+      if (token && (user.role === "admin" || user.role === "developer")) {
         login(token, user);
         // Opcional: guardar nombre para mostrarlo en el dashboard
         localStorage.setItem("userName", user.name);

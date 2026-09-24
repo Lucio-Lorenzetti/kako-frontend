@@ -29,6 +29,14 @@
   cursor: pointer;
 }
 
+.role-badge {
+  margin-left: 10px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
 /* -----------------------------
  * 🔹 NAVEGACIÓN (ESCRITORIO)
  * -----------------------------*/

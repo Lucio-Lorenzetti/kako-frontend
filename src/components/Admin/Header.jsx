@@ -9,7 +9,8 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
+  const isDeveloper = user?.role === "developer";
 
   // 🔹 Función para cerrar sesión
   const handleLogout = async () => {
@@ -28,6 +29,7 @@ export default function Header() {
       {/* Logo o título */}
       <div className="header-logo-container" onClick={goHome}>
         <img src={Logo} alt="Logo cancha" className="logo-header" />
+        {isDeveloper && <span className="role-badge">Developer</span>}
       </div>
 
       {/* Menú hamburguesa (móvil) */}

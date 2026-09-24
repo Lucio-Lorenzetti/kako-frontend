@@ -23,7 +23,8 @@
 
 /* Nueva clase para inputs dentro de tablas */
 .input-tablas {
-  width: 100px; /* Es mejor un ancho fijo en px para control total del símbolo */
+  /* El width se define inline por JS según la cantidad de dígitos, para que el número no se corte */
+  min-width: 60px;
   padding: 6px 6px 6px 25px; /* El padding-left de 25px deja lugar para el $ */
   text-align: center;
   border: 2px solid #96779d;
@@ -32,10 +33,22 @@
   color: white;
   outline: none;
   font-size: 1rem;
+  transition: width 0.15s ease;
 }
 
 .input-tablas:focus {
   border-color: rgb(26, 155, 253);
+}
+
+/* Sacamos las flechitas nativas del input number: le quitaban espacio al número */
+.input-tablas::-webkit-inner-spin-button,
+.input-tablas::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-tablas[type="number"] {
+  -moz-appearance: textfield;
 }
 
 /* Asegurar que las celdas no colapsen */
