@@ -21,6 +21,10 @@ export default function Dashboard() {
   const [habilitadoInterior, setHabilitadoInterior] = useState(true);
   const [habilitadoExterior, setHabilitadoExterior] = useState(true);
 
+  // Si la cancha exige que la reserva sea con 4 jugadores obligatoriamente
+  const [requiere4Interior, setRequiere4Interior] = useState(false);
+  const [requiere4Exterior, setRequiere4Exterior] = useState(false);
+
   // ───────────────────────────────
   // Cargar datos iniciales
   // ───────────────────────────────
@@ -46,6 +50,8 @@ export default function Dashboard() {
         setPrecioExterior(res.data.exterior != null ? Math.round(res.data.exterior) : "");
         setSenaInterior(res.data.sena_interior != null ? Math.round(res.data.sena_interior) : "");
         setSenaExterior(res.data.sena_exterior != null ? Math.round(res.data.sena_exterior) : "");
+        setRequiere4Interior(!!res.data.requiere_4_jugadores_interior);
+        setRequiere4Exterior(!!res.data.requiere_4_jugadores_exterior);
       })
       .catch((err) => console.error(err.response?.data || err.message));
 
@@ -81,6 +87,21 @@ export default function Dashboard() {
     }
   };
 
+  // Alternar si la cancha exige 4 jugadores obligatoriamente (se guarda recien
+  // al tocar "Guardar", junto con el precio y la seña de esa cancha)
+  const toggleRequiere4 = (cancha) => {
+    const actual = cancha === "Interior" ? requiere4Interior : requiere4Exterior;
+    const nuevoValor = !actual;
+    const setRequiere4 = cancha === "Interior" ? setRequiere4Interior : setRequiere4Exterior;
+
+    setRequiere4(nuevoValor);
+    alert(
+      `Vas a dejar la cancha ${cancha} en modo "${
+        nuevoValor ? "Solo 4 jugadores" : "Libre (2 o 4)"
+      }".\nRecordá tocar "Guardar" para aplicar el cambio.`
+    );
+  };
+
   // Ancho del input de precio en función de la cantidad de dígitos, para que el número no se corte.
   // El input es border-box (padding 25px izq + 6px der + 4px borde = 35px), así que ese margen
   // se suma aparte del ancho en "ch" que ocupan los dígitos.
@@ -100,6 +121,7 @@ export default function Dashboard() {
     const setSaving = cancha === "Interior" ? setSavingInterior : setSavingExterior;
     const montoPrecio = parseFloat(cancha === "Interior" ? precioInterior : precioExterior);
     const montoSena = parseFloat(cancha === "Interior" ? senaInterior : senaExterior);
+    const requiere4 = cancha === "Interior" ? requiere4Interior : requiere4Exterior;
 
     // VALIDACIÓN: La seña no puede ser mayor al precio
     if (montoSena > montoPrecio) {
@@ -115,9 +137,10 @@ export default function Dashboard() {
 
     setSaving(true);
     api
-      .put(`/admin/turnos/precio/${cancha}`, { 
-        precio: montoPrecio, 
-        sena: montoSena 
+      .put(`/admin/turnos/precio/${cancha}`, {
+        precio: montoPrecio,
+        sena: montoSena,
+        requiere_4_jugadores: requiere4,
       })
       .then(() => {
         alert(`Configuración de cancha ${cancha} actualizada correctamente`);
@@ -234,6 +257,7 @@ export default function Dashboard() {
               <tr>
                 <th>Cancha</th>
                 <th>Estado</th>
+                <th>Jugadores</th>
                 <th>Precio Total</th>
                 <th>Seña Requerida</th>
                 <th>Acción</th>
@@ -249,6 +273,14 @@ export default function Dashboard() {
                 className={`btn-secondary ${habilitadoInterior ? "habilitada" : "deshabilitada"}`}
               >
                 {habilitadoInterior ? "Habilitada" : "Deshabilitada"}
+              </button>
+            </td>
+            <td>
+              <button
+                onClick={() => toggleRequiere4("Interior")}
+                className="btn-secondary"
+              >
+                {requiere4Interior ? "Solo 4 jugadores" : "Libre (2 o 4)"}
               </button>
             </td>
             <td>
@@ -297,6 +329,14 @@ export default function Dashboard() {
                 className={`btn-secondary ${habilitadoExterior ? "habilitada" : "deshabilitada"}`}
               >
                 {habilitadoExterior ? "Habilitada" : "Deshabilitada"}
+              </button>
+            </td>
+            <td>
+              <button
+                onClick={() => toggleRequiere4("Exterior")}
+                className="btn-secondary"
+              >
+                {requiere4Exterior ? "Solo 4 jugadores" : "Libre (2 o 4)"}
               </button>
             </td>
             <td>

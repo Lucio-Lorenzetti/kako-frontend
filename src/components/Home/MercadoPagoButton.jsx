@@ -43,12 +43,16 @@ const MercadoPagoButton = ({ monto, descripcion, reservaData = {}, onBeforePago 
       setPreferenceId(response.data.id);
     } catch (err) {
       console.error("Error creando preferencia:", err);
-      // Si hay un 422 del backend, muestra el mensaje de error de validación
-      if (err.response && err.response.data && err.response.data.errors) {
-        const firstError = Object.values(err.response.data.errors)[0][0];
+      const data = err.response?.data;
+      // Reglas de negocio del backend (ej. "esta cancha solo admite 4 jugadores")
+      if (data?.error) {
+        setError(data.error);
+      } else if (data?.errors) {
+        // Si hay un 422 del backend, muestra el mensaje de error de validación
+        const firstError = Object.values(data.errors)[0][0];
         setError(`Error de validación: ${firstError}`);
-      } else if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
+      } else if (data?.message) {
+        setError(data.message);
       } else {
         setError("No se pudo generar el pago.");
       }

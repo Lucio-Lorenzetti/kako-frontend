@@ -8,6 +8,7 @@ const secciones = [
       "Ver las reservas de hoy y su detalle: jugadores, WhatsApp, si necesitan paletas y si buscan pareja.",
       "Configurar el precio total y la seña de cada cancha (Interior y Exterior).",
       "Habilitar o deshabilitar cada cancha.",
+      "Exigir que una cancha solo se reserve con 4 jugadores: el botón \"Jugadores\" alterna entre \"Libre (2 o 4)\" y \"Solo 4 jugadores\" — no olvidar tocar \"Guardar\" para aplicar el cambio.",
     ],
   },
   {
@@ -22,7 +23,7 @@ const secciones = [
     titulo: "Usuarios",
     items: [
       "Buscar usuarios por nombre o apellido.",
-      "Cambiar el rol de un usuario (Usuario / Admin).",
+      "Cambiar el rol de un usuario (Usuario / Admin / Developer).",
       "Activar o desactivar una cuenta.",
       "Eliminar un usuario.",
     ],
@@ -34,6 +35,13 @@ const secciones = [
       "Filtrar por fecha o por cancha.",
       "Cambiar el estado de un turno manualmente.",
       "Retrasar 30 minutos un horario puntual (por ejemplo, si se atrasa un partido) o devolverlo a su horario original.",
+    ],
+  },
+  {
+    titulo: "Mi Perfil",
+    items: [
+      "Cambiar tu contraseña de acceso en cualquier momento, ingresando la contraseña actual y la nueva (mínimo 8 caracteres).",
+      "No hace falta volver a iniciar sesión después de cambiarla: la sesión actual sigue activa.",
     ],
   },
 ];

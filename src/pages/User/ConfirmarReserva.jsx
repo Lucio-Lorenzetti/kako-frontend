@@ -13,6 +13,7 @@ const ConfirmarReserva = () => {
   const { user } = useAuth();
 
   const [turno, setTurno] = useState(location.state?.turno || null);
+  const [precios, setPrecios] = useState(null);
   const [jugadores, setJugadores] = useState("2");
   const [buscoPareja, setBuscoPareja] = useState("false");
   const [prestamoPaletas, setPrestamoPaletas] = useState("false");
@@ -41,6 +42,24 @@ const ConfirmarReserva = () => {
         .finally(() => setLoading(false));
     }
   }, [id, turno]);
+
+  // 🔹 Saber si la cancha del turno exige reservar con 4 jugadores
+  useEffect(() => {
+    api
+      .get("/precios-publicos")
+      .then((res) => setPrecios(res.data))
+      .catch((err) => console.error("Error cargando precios:", err));
+  }, []);
+
+  const requiere4 = turno && precios
+    ? !!(turno.cancha === "Interior"
+        ? precios.requiere_4_jugadores_interior
+        : precios.requiere_4_jugadores_exterior)
+    : false;
+
+  useEffect(() => {
+    if (requiere4) setJugadores("4");
+  }, [requiere4]);
 
   const isFormValid = () => {
     if (!turno || !turno.id || turno.precio * Number(jugadores) <= 0) {
@@ -102,10 +121,16 @@ const ConfirmarReserva = () => {
                 value={jugadores}
                 onChange={(e) => setJugadores(e.target.value)}
                 required
+                disabled={requiere4}
               >
-                <option value="2">2</option>
+                {!requiere4 && <option value="2">2</option>}
                 <option value="4">4</option>
               </select>
+              {requiere4 && (
+                <p className="nota-requiere4">
+                  Actualmente esta cancha está habilitada solo para reservas de 4 jugadores.
+                </p>
+              )}
               <p className="precio-total">
                 Monto de la seña a pagar: $
                 {(turno.sena * Number(jugadores)).toLocaleString("es-AR")}
