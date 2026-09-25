@@ -23,7 +23,7 @@ const secciones = [
     titulo: "Usuarios",
     items: [
       "Buscar usuarios por nombre o apellido.",
-      "Cambiar el rol de un usuario (Usuario / Admin / Developer).",
+      "Cambiar el rol de un usuario (Usuario / Admin ).",
       "Activar o desactivar una cuenta.",
       "Eliminar un usuario.",
     ],
