@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import api from "../../api/api";
 
-// Ahora recibe reservaData y un callback opcional onPagoExitoso
-const MercadoPagoButton = ({ monto, descripcion, reservaData = {}, onPagoExitoso }) => {
+const MercadoPagoButton = ({ monto, descripcion, reservaData = {}, onBeforePago }) => {
   const [preferenceId, setPreferenceId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -22,6 +21,13 @@ const MercadoPagoButton = ({ monto, descripcion, reservaData = {}, onPagoExitoso
     try {
       setLoading(true);
       setError(null);
+
+      // Guardamos los datos de la reserva ANTES de mandar al usuario a pagar: la
+      // pantalla de exito (/pago/success) los necesita para armar el mensaje de
+      // WhatsApp sin depender de que el webhook del backend ya haya confirmado el pago.
+      if (typeof onBeforePago === "function") {
+        onBeforePago();
+      }
 
       const token = localStorage.getItem("token");
       const response = await api.post(
@@ -50,11 +56,6 @@ const MercadoPagoButton = ({ monto, descripcion, reservaData = {}, onPagoExitoso
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (preferenceId && typeof onPagoExitoso === "function") {
-    }
-  }, [preferenceId, onPagoExitoso]);
 
   return (
     <div>
