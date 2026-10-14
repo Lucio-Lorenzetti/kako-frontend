@@ -34,7 +34,7 @@ const secciones = [
       "Ver todos los turnos, disponibles, reservados o inactivos.",
       "Filtrar por fecha o por cancha.",
       "Cambiar el estado de un turno manualmente.",
-      "Retrasar 30 minutos un horario puntual (por ejemplo, si se atrasa un partido) o devolverlo a su horario original.",
+      "Retrasar o adelantar 30 minutos un horario puntual (por ejemplo, si se atrasa un partido), y devolverlo a su horario original. El ajuste se aplica en cascada a los turnos posteriores de la misma cancha y no se puede aplicar dos veces seguidas en la misma dirección sin volver primero al horario original.",
     ],
   },
   {

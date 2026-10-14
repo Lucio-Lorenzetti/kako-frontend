@@ -12,11 +12,6 @@ export default function Turnos() {
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(7);
 
-  // 1. Definimos los horarios originales según tu lista
-  const horariosOriginales = [
-    "13:00", "14:30", "16:00", "17:30", 
-    "19:00", "20:30", "22:00"];
-
   const fetchTurnos = () => {
     setLoading(true);
     api
@@ -46,12 +41,7 @@ export default function Turnos() {
       .catch(() => alert("Error al actualizar el estado"));
   };
 
-  const handleAjusteHorario = (id, esRetrasado) => {
-    const accion = esRetrasado ? "adelantar" : "retrasar";
-    const mensaje = esRetrasado 
-      ? "¿Deseas volver al horario ORIGINAL?" 
-      : "¿Deseas RETRASAR 30 minutos?";
-
+  const handleAjusteHorario = (id, accion, mensaje) => {
     if (!window.confirm(mensaje)) return;
 
     api
@@ -60,7 +50,9 @@ export default function Turnos() {
         alert(res.data.message);
         fetchTurnos();
       })
-      .catch(() => alert("Error al ajustar los horarios"));
+      .catch((err) => {
+        alert(err.response?.data?.error || "Error al ajustar los horarios");
+      });
   };
 
   const canchas = [...new Set(turnos.map((t) => t.cancha).filter(Boolean))];
@@ -128,21 +120,23 @@ export default function Turnos() {
               </thead>
               <tbody>
                 {displayedTurnos.map((turno) => {
-                  // 2. LÓGICA DE DETECCIÓN EN FRONT:
                   const horaLimpia = turno.hora ? turno.hora.slice(0, 5) : "";
-                  // Si la hora NO está en la lista de originales, consideramos que es "retrasado"
-                  const estaRetrasado = !horariosOriginales.includes(horaLimpia);
+                  // Estado real del turno respecto a su horario original, según el backend
+                  const ajusteMinutos = turno.ajuste_minutos || 0;
+                  const estaRetrasado = ajusteMinutos > 0;
+                  const estaAdelantado = ajusteMinutos < 0;
+                  const estaAjustado = estaRetrasado || estaAdelantado;
 
                   return (
                     <tr key={turno.id}>
                       <td>{turno.fecha ? turno.fecha.split("T")[0].split("-").reverse().slice(0, 2).join("/") : "-"}</td>
                       <td>
-                        <strong style={{ color: estaRetrasado ? '#e62222' : 'inherit' }}>
+                        <strong style={{ color: estaAjustado ? '#e62222' : 'inherit' }}>
                           {horaLimpia}
                         </strong>
-                        {estaRetrasado && (
+                        {estaAjustado && (
                           <span style={{ fontSize: '10px', display: 'block', color: '#e62222', fontWeight: 'bold' }}>
-                            AJUSTADO
+                            {estaRetrasado ? "RETRASADO" : "ADELANTADO"}
                           </span>
                         )}
                       </td>
@@ -155,18 +149,53 @@ export default function Turnos() {
                         </select>
                       </td>
                       <td>
-                        <button 
-                          className="estado-select"
-                          onClick={() => handleAjusteHorario(turno.id, estaRetrasado)}
-                          style={{
-                            backgroundColor: estaRetrasado ? 'rgb(83, 83, 83)' : 'var(--color-padel)',
-                            color: 'white',
-                            cursor: 'pointer',
-                            width: '100%'
-                          }}
-                        >
-                          {estaRetrasado ? "Original" : "Retrasar"}
-                        </button>
+                        {estaAjustado ? (
+                          <button
+                            className="estado-select"
+                            onClick={() =>
+                              handleAjusteHorario(
+                                turno.id,
+                                estaRetrasado ? "adelantar" : "retrasar",
+                                "¿Deseas volver al horario ORIGINAL?"
+                              )
+                            }
+                            style={{
+                              backgroundColor: 'rgb(83, 83, 83)',
+                              color: 'white',
+                              cursor: 'pointer',
+                              width: '100%'
+                            }}
+                          >
+                            Original
+                          </button>
+                        ) : (
+                          <div style={{ display: 'flex', gap: '4px' }}>
+                            <button
+                              className="estado-select"
+                              onClick={() => handleAjusteHorario(turno.id, "adelantar", "¿Deseas ADELANTAR 30 minutos?")}
+                              style={{
+                                backgroundColor: 'var(--color-padel)',
+                                color: 'white',
+                                cursor: 'pointer',
+                                flex: 1
+                              }}
+                            >
+                              Adelantar
+                            </button>
+                            <button
+                              className="estado-select"
+                              onClick={() => handleAjusteHorario(turno.id, "retrasar", "¿Deseas RETRASAR 30 minutos?")}
+                              style={{
+                                backgroundColor: 'var(--color-padel)',
+                                color: 'white',
+                                cursor: 'pointer',
+                                flex: 1
+                              }}
+                            >
+                              Retrasar
+                            </button>
+                          </div>
+                        )}
                       </td>
                     </tr>
                   );
