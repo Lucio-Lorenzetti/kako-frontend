@@ -44,14 +44,9 @@ export default function Estadisticas() {
       hint: "Reservas pagadas online desde que existe el sistema.",
     },
     {
-      label: "Turnos reservados por clientes (ahora)",
-      value: stats.turnos_reservados_cliente_actual,
-      hint: "Turnos actualmente reservados con un pago real detrás.",
-    },
-    {
-      label: "Turnos cargados a mano (ahora)",
-      value: stats.turnos_reservados_manual_actual,
-      hint: "Turnos actualmente reservados sin pago, cargados por un admin.",
+      label: "Turnos cargados a mano (total histórico)",
+      value: stats.turnos_reservados_manual_total,
+      hint: "Turnos que un admin marcó reservado sin pago, desde que existe el sistema.",
     },
   ];
 
