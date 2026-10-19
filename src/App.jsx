@@ -15,6 +15,7 @@ import Usuarios from "./pages/Admin/Usuarios";
 import Turnos from "./pages/Admin/Turnos";
 import Ayuda from "./pages/Admin/Ayuda";
 import PerfilAdmin from "./pages/Admin/Perfil";
+import Estadisticas from "./pages/Admin/Estadisticas";
 
 import PagoSuccess from "./pages/User/PagoSuccess";
 import PagoFailure from "./pages/User/PagoFailure";
@@ -49,6 +50,7 @@ function App() {
           <Route path="/admin/turnos" element={<AdminLayout><Turnos /></AdminLayout>} />
           <Route path="/admin/ayuda" element={<AdminLayout><Ayuda /></AdminLayout>} />
           <Route path="/admin/perfil" element={<AdminLayout><PerfilAdmin /></AdminLayout>} />
+          <Route path="/admin/estadisticas" element={<AdminLayout><Estadisticas /></AdminLayout>} />
 
 
           <Route path="/pago/success" element={<PagoSuccess />} />

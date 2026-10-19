@@ -1,0 +1,45 @@
+.estadisticas-loading,
+.estadisticas-error {
+  text-align: center;
+  font-weight: bold;
+}
+
+.estadisticas-error {
+  color: #e62222;
+}
+
+.estadisticas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+  width: 100%;
+}
+
+.estadisticas-stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 1.5rem 1rem;
+  background: rgb(83, 83, 83);
+  border: 2px solid var(--color-padel);
+  border-radius: 12px;
+  color: white;
+}
+
+.estadisticas-stat-value {
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: var(--color-padel);
+}
+
+.estadisticas-stat-label {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.estadisticas-stat-hint {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}

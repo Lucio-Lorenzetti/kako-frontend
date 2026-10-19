@@ -48,6 +48,7 @@ export default function Header() {
         <a href="/admin/reservas">Reservas</a>
         <a href="/admin/usuarios">Usuarios</a>
         <a href="/admin/turnos">Turnos</a>
+        {isDeveloper && <a href="/admin/estadisticas">Estadísticas</a>}
         <a href="/admin/ayuda">Ayuda</a>
         <a href="/admin/perfil">Mi Perfil</a>
 
