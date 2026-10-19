@@ -1,3 +1,24 @@
+.estadisticas-container {
+  background: url('../../assets/f1.jpg') center/cover no-repeat;
+  padding: 40px 20px;
+  min-height: calc(100vh - 40px);
+  margin-top: 40px;
+  position: relative;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Overlay degradado, igual al resto del panel */
+.estadisticas-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(0,0,0,0.7));
+  z-index: 0;
+}
+
 .estadisticas-loading,
 .estadisticas-error {
   text-align: center;
